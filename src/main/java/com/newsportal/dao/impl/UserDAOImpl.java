@@ -29,17 +29,12 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void saveUser(User user) {
         Session session = sessionFactory.getCurrentSession();
-
-        // непонятно как сделать добавление по дефолту
-        Role role = new Role();
-        role.setId(2);
-        user.setRole(role);
-
         session.save(user);
     }
 
     @Override
     public User getUser(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(User.class, id);
     }
 }

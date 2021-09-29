@@ -57,17 +57,33 @@
 	<bean class="org.springframework.orm.hibernate5.HibernateTransactionManager" id="myTransactionManager" >
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
-	<!-- Localization -->
-	<bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
-		<property name="basenames" value="messages.localization.local"/>
-	</bean>
     
     <!-- Enable configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="myTransactionManager" />
 
 	<!-- Add support for reading web resources: css, images, js, etc ... -->
 	<mvc:resources location="/resources/" mapping="/resources/**"/>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*"/>
+			<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+				<property name="paramName" value="languageVar"/>
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="ru"/>
+		<property name="cookieMaxAge" value="100000"/>
+	</bean>
+
+	<!-- Localization -->
+	<bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
+		<property name="basenames" value="messages.localization.local"/>
+		<property name="cacheSeconds" value="1"/>
+		<property name="defaultEncoding" value="UTF-8"/>
+	</bean>
 
 </beans>
 

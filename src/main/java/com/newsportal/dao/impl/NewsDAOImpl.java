@@ -20,7 +20,7 @@ public class NewsDAOImpl implements NewsDAO {
     public List<News> getListNews() {
         Session session = sessionFactory.getCurrentSession();
         Query<News> newsQuery = session.createQuery(
-                "from News", News.class);
+                "FROM News ORDER BY date", News.class);
 
         return newsQuery.getResultList();
     }

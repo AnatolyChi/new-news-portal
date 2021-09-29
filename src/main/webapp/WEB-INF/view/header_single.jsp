@@ -10,20 +10,21 @@
     <body>
 
     <nav class="top-nav">
-        <img class="body-img" src="../../resources/img/News.svg.png" width="150px" alt="news_logo">
+        <h1 style="color: white; margin: 5px 15px 15px;float: left">GREAT NEWS</h1>
         <div class="top-nav-right">
-            <a href="<c:url value="/user/log_in"/>">LOG IN</a>
-            <a href="<c:url value="/user/sign_up"/>">SIGN UP</a>
-            <div class="dropdown">
-                <button class="drop-button">OPTION
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="#">Link-1</a>
-                    <a href="#">Link-2</a>
-                    <a href="#">Link-3</a>
-                </div>
-            </div>
+            <a href="<c:url value="#"/>">OWN PAGE</a>
+            <a href="<c:url value="#"/>">FAVOURITE NEWS</a>
+            <a href="<c:url value="#"/>">OFFER NEWS</a>
+            <a href="<c:url value="/news/user/log_out"/>">LOG OUT</a>
+<%--            <div class="dropdown">--%>
+<%--                <button class="drop-button">OTHER--%>
+<%--                    <i class="fa fa-caret-down"></i>--%>
+<%--                </button>--%>
+<%--                <div class="dropdown-content">--%>
+<%--                    <a href="#">CONTACTS</a>--%>
+<%--                    <a href="#">ABOUT US</a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
         </div>
     </nav>
 

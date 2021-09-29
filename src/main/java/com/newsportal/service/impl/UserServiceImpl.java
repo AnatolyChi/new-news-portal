@@ -36,6 +36,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User getUser(int id) {
-        return null;
+        return userDAO.getUser(id);
     }
 }
