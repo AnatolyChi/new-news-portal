@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -26,18 +27,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", unique = true, nullable = false)
     private Integer id;
 
-    @NotNull
-    @UniqueElements(message = "Данный логин уже присутствует")
-    @Length(min = 3, max = 30, message = "min = 3, max = 30")
+    @NotNull(message = "not null")
+    @Size(min = 3, max = 30, message = "error size login")
 //    @Pattern(regexp = "^[A-Za-z]([.A-Za-z0-9-]{1,10})([A-Za-z0-9])$")
-    @Column(name = "login", length = 30)
+    @Column(name = "login", length = 30, unique = true, nullable = false)
     private String login;
 
-    @NotNull
-    @Range(min = 5, max = 30, message = "min = 5, max = 30")
+    @NotNull(message = "not null")
+    @Size(min = 5, max = 30, message = "error size password")
 //    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{5,}")
     @Column(name = "password", length = 256, nullable = false)
     private String password;

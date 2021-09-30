@@ -5,54 +5,71 @@ import com.newsportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.Optional;
+
 @Controller
-@SessionAttributes("user")
 @RequestMapping("/news/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    // cannot use
-    @ModelAttribute("user")
-    public User createUser() {
-        return new User();
-    }
+    @Autowired
+    private HttpSession httpSession;
 
     @GetMapping("/sign_up")
-    public String initSignUp(User user, Model model) {
-//        User user = new User();
-        model.addAttribute("user", user);
+    public String initSignUp(Model model) {
+        model.addAttribute("user", new User());
         return "sign_up";
     }
 
     @PostMapping("/sign_up")
-    public String createSignUp(User user) {
-        userService.saveUser(user);
-        // попробовать через уникальное значение выбросить исключение
-        return "redirect:/news/main";
+    public String createSignUp(@Valid User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "sign_up";
+        } else if (userService.getUser(user.getLogin()).isEmpty()) {
+            userService.saveUser(user);
+            httpSession.setAttribute("user", user);
+            return "redirect:/news/main";
+        }
+
+        // сообщение о существовании введенного логина
+        return "sign_up";
     }
 
     @GetMapping("/log_in")
-    public String initLogIn(User user, Model model) {
-//        User user = new User();
-        model.addAttribute("user", user);
+    public String initLogIn(Model model) {
+        model.addAttribute("user", new User());
         return "log_in";
     }
 
     @PostMapping("/log_in")
-    public String createLogIn(@ModelAttribute("user") User user, Model model) {
-        // проверку на нал сделать, то есть взятие юзера
-        model.addAttribute("user", userService.getUser(user.getId()));
+    public String createLogIn(@Valid User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "log_in";
+        } else if (userService.getUser(user.getLogin(), user.getPassword()).isPresent()) {
+            httpSession.setAttribute("user", user);
+            return "redirect:/news/main";
+        }
+
+        // сообщение о неверности логина или пароля
+        return "log_in";
+    }
+
+    @GetMapping("/log_out")
+    public String destroyUser() {
+        httpSession.invalidate();
         return "redirect:/news/main";
     }
 
-    @GetMapping("log_out")
-    public String destroyUser(SessionStatus sessionStatus) {
-        sessionStatus.setComplete();
-        return "redirect:/news";
+    @GetMapping("/own_page")
+    public String ownPage() {
+        return "own_page";
     }
 }

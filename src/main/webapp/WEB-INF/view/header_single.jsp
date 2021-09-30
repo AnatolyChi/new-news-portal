@@ -12,7 +12,7 @@
     <nav class="top-nav">
         <h1 style="color: white; margin: 5px 15px 15px;float: left">GREAT NEWS</h1>
         <div class="top-nav-right">
-            <a href="<c:url value="#"/>">OWN PAGE</a>
+            <a href="<c:url value="/news/user/own_page"/>">OWN PAGE</a>
             <a href="<c:url value="#"/>">FAVOURITE NEWS</a>
             <a href="<c:url value="#"/>">OFFER NEWS</a>
             <a href="<c:url value="/news/user/log_out"/>">LOG OUT</a>
