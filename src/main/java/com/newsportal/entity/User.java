@@ -5,15 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -27,13 +21,13 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", unique = true, nullable = false)
+    @Column(name = "user_id")
     private Integer id;
 
     @NotNull(message = "not null")
     @Size(min = 3, max = 30, message = "error size login")
 //    @Pattern(regexp = "^[A-Za-z]([.A-Za-z0-9-]{1,10})([A-Za-z0-9])$")
-    @Column(name = "login", length = 30, unique = true, nullable = false)
+    @Column(name = "login", length = 30, nullable = false)
     private String login;
 
     @NotNull(message = "not null")
@@ -54,7 +48,8 @@ public class User {
     @Column(name = "email", length = 30)
     private String email;
 
-//    @Pattern(regexp = "^(?:1(?:00?|\\d)|[2-5]\\d|[6-9]\\d?)$")
+    @Min(18)
+    @Max(70)
     @Column(name = "age")
     private Integer age;
 

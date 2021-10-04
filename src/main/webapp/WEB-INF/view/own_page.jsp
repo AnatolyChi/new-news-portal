@@ -10,8 +10,13 @@
 
   <body>
 
-    <h1>${sessionScope.user.login}</h1>
-    <h1>${sessionScope.user.password}</h1>
+    <p>Login:       ${sessionScope.user.login}</p>
+    <p>Firstname:   ${sessionScope.user.firstname}</p>
+    <p>Lastname:    ${sessionScope.user.lastname}</p>
+    <p>Age:         ${sessionScope.user.age}</p>
+    <p>Email:       ${sessionScope.user.email}</p>
+
+    <p>Date:        ${sessionScope.user.dateRegistered}</p>
 
   </body>
 </html>

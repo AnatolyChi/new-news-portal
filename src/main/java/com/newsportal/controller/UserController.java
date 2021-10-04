@@ -7,9 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -21,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private HttpSession httpSession;
+    private HttpServletRequest session;
 
     @GetMapping("/sign_up")
     public String initSignUp(Model model) {
@@ -35,7 +34,7 @@ public class UserController {
             return "sign_up";
         } else if (userService.getUser(user.getLogin()).isEmpty()) {
             userService.saveUser(user);
-            httpSession.setAttribute("user", user);
+            session.getSession().setAttribute("user", user);
             return "redirect:/news/main";
         }
 
@@ -53,8 +52,11 @@ public class UserController {
     public String createLogIn(@Valid User user, BindingResult result) {
         if (result.hasErrors()) {
             return "log_in";
-        } else if (userService.getUser(user.getLogin(), user.getPassword()).isPresent()) {
-            httpSession.setAttribute("user", user);
+        }
+
+        Optional<User> userOptional = userService.getUser(user.getLogin(), user.getPassword());
+        if (userOptional.isPresent()) {
+            session.getSession().setAttribute("user", userOptional.get());
             return "redirect:/news/main";
         }
 
@@ -64,7 +66,7 @@ public class UserController {
 
     @GetMapping("/log_out")
     public String destroyUser() {
-        httpSession.invalidate();
+        session.getSession().invalidate();
         return "redirect:/news/main";
     }
 

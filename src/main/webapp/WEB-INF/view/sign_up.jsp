@@ -27,12 +27,12 @@
                     <form:form action="sign_up" modelAttribute="user" method="POST" cssStyle="margin-left: 45%">
                         <form:hidden path="id"/>
                         <form:errors path="login"/><br>
-                        <form:input placeholder="Login" path="login"/>
+                        <form:input autocomplete="true" placeholder="Login" path="login" cssClass="user-input"/>
                         <br>
                         <form:errors path="password"/><br>
-                        <form:password placeholder="Password" path="password"/>
+                        <form:password placeholder="Password" path="password" cssClass="user-input"/>
                         <br>
-                        <input type="submit" value="submit">
+                        <input style="margin-left: 40px; margin-top: 15px" class="submit-button" type="submit" value="submit">
                     </form:form>
                 </div>
             </c:when>

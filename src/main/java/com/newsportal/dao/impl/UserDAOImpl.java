@@ -24,12 +24,14 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteUser(int id) {
-
+        session = sessionFactory.getCurrentSession();
+        session.delete(id);
     }
 
     @Override
     public void saveUser(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        session = sessionFactory.getCurrentSession();
+        session.save(user);
     }
 
     @Override

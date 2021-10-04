@@ -12,8 +12,13 @@
     <nav class="top-nav">
         <h1 style="color: white; margin: 5px 15px 15px;float: left">GREAT NEWS</h1>
         <div class="top-nav-right">
+
+            <!-- разобраться с доступностью роли -->
+            <c:if test="${sessionScope.user.role.roleName.equals('Admin')}">
+                <a href="<c:url value="/news/add_news"/>">ADD NEWS</a>
+            </c:if>
             <a href="<c:url value="/news/user/own_page"/>">OWN PAGE</a>
-            <a href="<c:url value="#"/>">FAVOURITE NEWS</a>
+            <a href="<c:url value="/news/favourite_news"/>">FAVOURITE NEWS</a>
             <a href="<c:url value="#"/>">OFFER NEWS</a>
             <a href="<c:url value="/news/user/log_out"/>">LOG OUT</a>
 <%--            <div class="dropdown">--%>

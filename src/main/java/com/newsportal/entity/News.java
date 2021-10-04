@@ -5,9 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -20,21 +25,31 @@ public class News {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "news_id", nullable = false)
+    @Column(name = "news_id")
     private Integer id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private User user;
 
+    @NotNull(message = "not null")
     @Column(name = "title", nullable = false, length = 100)
     private String title;
 
+    @NotNull(message = "not null")
     @Column(name = "content", nullable = false, length = 10000)
     private String content;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
+
+    @PrePersist
+    public void onCreate() {
+        if (date == null) {
+            date = LocalDate.now();
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
