@@ -41,8 +41,7 @@
 	</bean>  
 	
     <!-- Setup Hibernate session factory -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="myDataSource" />
 		<property name="packagesToScan" value="com.newsportal.entity" />
 		<property name="hibernateProperties">
@@ -63,37 +62,46 @@
 
 	<!-- Add support for reading web resources: css, images, js, etc ... -->
 	<mvc:resources location="/resources/" mapping="/resources/**"/>
-	
+
+	<!-- Localization -->
+
+<!--	<mvc:interceptors>-->
+<!--		<mvc:interceptor>-->
+<!--			<mvc:mapping path="/*" />-->
+<!--			<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
+<!--				<property name="paramName" value="languageVar" />-->
+<!--			</bean>-->
+<!--		</mvc:interceptor>-->
+<!--	</mvc:interceptors>-->
+
+<!--	<bean id="localSource" class="org.springframework.context.support.ResourceBundleMessageSource">-->
+<!--		<property name="basename" value="classpath:/localization/local"/>-->
+<!--		<property name="defaultEncoding" value="UTF-8"/>-->
+<!--	</bean>-->
+
+<!--	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+<!--		<property name="basename" value="classpath:/localization/local"/>-->
+<!--		<property name="useCodeAsDefaultMessage" value="true"/>-->
+<!--		<property name="defaultEncoding" value="UTF-8"/>-->
+<!--	</bean>-->
+
 	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/*"/>
-			<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-				<property name="paramName" value="languageVar"/>
-			</bean>
-		</mvc:interceptor>
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="languageVar" />
+		</bean>
 	</mvc:interceptors>
 
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-		<property name="defaultLocale" value="ru"/>
+		<property name="defaultLocale" value="en" />
+		<!-- cookieMaxAge in seconds. if you set it to -1, the cookie will be deleted when browser is closed) -->
 		<property name="cookieMaxAge" value="100000"/>
 	</bean>
 
-	<!-- Localization -->
-	<bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
-		<property name="basenames" value="messages.localization.local"/>
+	<!-- MessageSource ReloadableResourceBundleMessageSource configuration -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames" value="classpath:/localization/local"/>
 		<property name="cacheSeconds" value="1"/>
-		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
 
 </beans>
-
-
-
-
-
-
-
-
-
-
-

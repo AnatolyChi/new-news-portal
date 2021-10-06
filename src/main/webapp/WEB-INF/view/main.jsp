@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -103,10 +104,5 @@
         </c:choose>
 
         <jsp:include page="footer.jsp"/>
-
-        <!-- Локаль не меняет : разобраться -->
-        <%--        <h1 style="text-align: center"><spring:message code="local.write.admin"/></h1>--%>
-        <%--        <a href="<%=request.getContextPath()%>?languageVar=en">EN</a>--%>
-        <%--        <a href="<%=request.getContextPath()%>?languageVar=ru">RU</a>--%>
     </body>
 </html>

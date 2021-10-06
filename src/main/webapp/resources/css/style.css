@@ -25,19 +25,33 @@ h1 {
 }
 
 .user-input {
-    /*box-shadow: 0 8px 15px rgb(136, 136, 136);*/
     border-radius: 3px 3px 3px 3px;
     background-color: rgba(253, 255, 255, 0.25);
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
-    /*width: 27%;*/
-    /*height: 50%;*/
     margin: auto;
     border: 0;
     height: 27px;
-    /*top: 25%;*/
-    /*position: absolute;*/
-    /*left: 530px;*/
+}
+
+.news-input {
+    border-radius: 3px 3px 3px 3px;
+    background-color: rgba(253, 255, 255, 0.36);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 0;
+    width: 600px;
+}
+
+.news-read {
+    border-radius: 3px 3px 3px 3px;
+    background-color: rgba(253, 255, 255, 0.29);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 0;
+    width: 800px;
+    text-align: center;
+    margin-left: 333px;
 }
 
 .submit-button {
@@ -46,14 +60,12 @@ h1 {
     width: 68px;
     height: 22px;
     border-radius: 40px;
-    /*border: 0;*/
     font-family: 'Lato', sans-serif;
     font-size: 8px;
     text-transform: uppercase;
     text-align: center;
     letter-spacing: 3px;
     font-weight: 600;
-    /*color: #524f4e;*/
     color: white;
     background: rgba(255, 255, 255, 0);
     box-shadow: 0 8px 15px rgba(0, 0, 0, .1);

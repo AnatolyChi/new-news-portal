@@ -10,10 +10,12 @@
     </head>
 
     <body>
+        <c:import url="header_single.jsp"/>
 
-        <div>
-            <h3 style="text-align: center">${news.title}</h3>
-            <p style="text-align: center">${news.content}</p>
+        <div class="news-read">
+            <h3>${news.title}</h3>
+            <hr>
+            <p>${news.content}</p>
         </div>
 
         <c:import url="footer.jsp"/>

@@ -14,17 +14,21 @@
         <c:import url="header_single.jsp"/>
 
         <div>
-            <form:form action="/news/add_news" modelAttribute="news" method="POST" cssStyle="margin-left: 45%">
+            <form:form action="/news/add_news" modelAttribute="news" method="POST" cssStyle="margin-left: 30%">
                 <form:hidden path="id"/>
 
                 <form:errors path="title"/><br>
-                <form:textarea path="title" placeholder="Title" rows="10" cols="20"/><br>
+                <form:textarea path="title" placeholder="Title" rows="10" cols="20" cssClass="news-input" cssStyle="height: 20px"/><br>
 
                 <form:errors path="content"/><br>
-                <form:textarea  path="content" placeholder="Content" rows="10" cols="20"/><br>
-                <input class="submit-button" type="submit" value="submit">
+                <form:textarea  path="content" placeholder="Content" rows="10" cols="20" cssClass="news-input" cssStyle="height: 120px"/><br>
+                <a style="float: left; margin-top: 30px" href="<c:url value="/news/main"/>">
+                    <img style="width: 29px;" src="../../resources/img/chevron%20with%20circle%20left.svg" alt="back">
+                </a>
+                <input style="margin-top: 30px; margin-left: 230px; float: left" class="submit-button" type="submit" value="submit">
             </form:form>
         </div>
 
+        <c:import url="footer.jsp"/>
     </body>
 </html>
