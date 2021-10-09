@@ -35,9 +35,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional getUser(int id) {
+    public Optional<User> getUser(int id) {
         session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM User u WHERE u.id = :id")
+        return session.createQuery("FROM User u WHERE u.user_id = :id", User.class)
                 .setParameter("id", id)
                 .getResultList()
                 .stream()
@@ -45,9 +45,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional getUser(String login) {
+    public Optional<User> getUser(String login) {
         session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM User u WHERE u.login = :login")
+        return session.createQuery("FROM User u WHERE u.login = :login", User.class)
                 .setParameter("login", login)
                 .getResultList()
                 .stream()
@@ -55,9 +55,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional getUser(String login, String password) {
+    public Optional<User> getUser(String login, String password) {
         session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM User u WHERE u.login = :login AND u.password = :password")
+        return session.createQuery("FROM User u WHERE u.login = :login AND u.password = :password", User.class)
                 .setParameter("login", login)
                 .setParameter("password", password)
                 .getResultList()

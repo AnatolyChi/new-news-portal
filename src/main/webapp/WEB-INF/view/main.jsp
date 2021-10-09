@@ -47,48 +47,27 @@
                         </c:forEach>
                     </div>
 
-                    <!-- Навигация по новостям -->
-<%--                    <nav>--%>
-<%--                        <ul>--%>
-<%--                            <c:if test="${currentPage != 1}">--%>
-<%--                                <li><a href="controller?command=MAIN_PAGE&recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">--%>
-<%--                                        ${previous}--%>
-<%--                                </a></li>--%>
-<%--                            </c:if>--%>
-<%--    --%>
-<%--                            <c:forEach begin="1" end="${nOfPages}" var="i">--%>
-<%--                                <c:choose>--%>
-<%--                                    <c:when test="${currentPage eq i}">--%>
-<%--                                        <li><a>${i}<span>(${current})</span></a></li>--%>
-<%--                                    </c:when>--%>
-<%--                                    <c:otherwise>--%>
-<%--                                        <li><a href="controller?command=MAIN_PAGE&recordsPerPage=${recordsPerPage}&currentPage=${i}">--%>
-<%--                                                ${i}--%>
-<%--                                        </a></li>--%>
-<%--                                    </c:otherwise>--%>
-<%--                                </c:choose>--%>
-<%--                            </c:forEach>--%>
-<%--    --%>
-<%--                            <c:if test="${currentPage lt nOfPages}">--%>
-<%--                                <li><a href="controller?command=MAIN_PAGE&recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">--%>
-<%--                                        ${next}--%>
-<%--                                </a></li>--%>
-<%--                            </c:if>--%>
-<%--                        </ul>--%>
-<%--                    </nav>--%>
+                    <!-- Pagination -->
+                    <div>
+                        <c:forEach begin="${1}" end="${pagesCount}" step="1" varStatus="i">
+                            <c:url value="/news/main" var="url_page">
+                                <c:param name="page" value="${i.index}"/>
+                            </c:url>
+                            <a href="${url_page}">${i.index}</a>
+                        </c:forEach>
+                    </div>
 
                     <!-- Выборка, сколько новостей показывать на странице -->
-<%--                    <div style="text-align: center; margin-top: 50px">--%>
-<%--                        <form action="controller?command=MAIN_PAGE" method="POST">--%>
-<%--                            <label for="records">${records}:</label>--%>
-<%--                            <select id="records" name="recordsPerPage">--%>
-<%--                                <option value="4">4</option>--%>
-<%--                                <option value="8">8</option>--%>
-<%--                                <option value="12">12</option>--%>
-<%--                            </select>--%>
-<%--                            <input type="hidden" name="currentPage" value="1">--%>
-<%--                            <input type="submit" value="${submit}">--%>
-<%--                        </form>--%>
+<%--                    <div style="margin: auto">--%>
+<%--                        <form:form modelAttribute="newsList" action="/news/main" method="get">--%>
+<%--                            <form:select label="Select:" path="">--%>
+<%--                                <form:option value="4">4</form:option>--%>
+<%--                                <form:option value="8">8</form:option>--%>
+<%--                                <form:option value="12">12</form:option>--%>
+<%--                                <form:option value="16">12</form:option>--%>
+<%--                            </form:select>--%>
+<%--                            <input type="submit" value="<spring:message code="button.submit"/>">--%>
+<%--                        </form:form>--%>
 <%--                    </div>--%>
                 </c:if>
             </c:when>

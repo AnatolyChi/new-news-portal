@@ -3,9 +3,11 @@ package com.newsportal.controller;
 import com.newsportal.entity.User;
 import com.newsportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,11 @@ public class UserController {
 
     @Autowired
     private HttpServletRequest session;
+
+    @InitBinder
+    private void initBinder(WebDataBinder dataBinder) {
+        dataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
 
     @GetMapping("/sign_up")
     public String initSignUp(Model model) {
@@ -61,6 +68,7 @@ public class UserController {
         }
 
         // сообщение о неверности логина или пароля
+        // через Model?
         return "log_in";
     }
 

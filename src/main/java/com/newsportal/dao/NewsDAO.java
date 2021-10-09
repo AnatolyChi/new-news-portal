@@ -7,10 +7,12 @@ import java.util.Optional;
 
 public interface NewsDAO {
     List<News> getListNews();
+    List<News> getListNews(int page);
+    Optional<News> getNews(String title);
     void saveNews(News news);
     void updateNews(int newsId);
     void deleteNews(int id);
     News getNews(int id);
-    Optional<News> getNews(String title);
     void updateNews(News news);
+    int countNews();
 }

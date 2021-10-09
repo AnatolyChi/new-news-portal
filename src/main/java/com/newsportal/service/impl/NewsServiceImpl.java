@@ -24,6 +24,12 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
+    public List<News> getListNews(int page) {
+        return newsDAO.getListNews(page);
+    }
+
+    @Override
+    @Transactional
     public void saveNews(News news) {
         newsDAO.saveNews(news);
     }
@@ -56,5 +62,11 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public void updateNews(News news) {
         newsDAO.updateNews(news);
+    }
+
+    @Override
+    @Transactional
+    public int newsCount() {
+        return newsDAO.countNews();
     }
 }

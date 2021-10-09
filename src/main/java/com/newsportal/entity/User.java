@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -24,13 +25,11 @@ public class User {
     @Column(name = "user_id")
     private Integer id;
 
-    @NotNull(message = "not null")
     @Size(min = 3, max = 30, message = "error size login")
 //    @Pattern(regexp = "^[A-Za-z]([.A-Za-z0-9-]{1,10})([A-Za-z0-9])$")
     @Column(name = "login", length = 30, nullable = false)
     private String login;
 
-    @NotNull(message = "not null")
     @Size(min = 5, max = 30, message = "error size password")
 //    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{5,}")
     @Column(name = "password", length = 256, nullable = false)
@@ -44,7 +43,7 @@ public class User {
     @Column(name = "lastname", length = 30)
     private String lastname;
 
-    @Pattern(regexp = "^[^@]+@[^@.]+\\.[^@]+$")
+    @Email(message = "Email should be valid")
     @Column(name = "email", length = 30)
     private String email;
 
@@ -53,10 +52,11 @@ public class User {
     @Column(name = "age")
     private Integer age;
 
-    @Column(name = "date_registered", nullable = false)
+    @CreationTimestamp
+    @Column(name = "date_registered", nullable = false, updatable = false)
     private Timestamp dateRegistered;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 

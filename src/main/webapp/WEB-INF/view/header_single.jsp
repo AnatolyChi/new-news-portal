@@ -22,17 +22,19 @@
                 <a href="<c:url value="/news/favourite_news"/>">FAVOURITE NEWS</a>
                 <a href="<c:url value="#"/>">OFFER NEWS</a>
                 <a href="<c:url value="/news/user/log_out"/>">
-                    <spring:message code="local.authorization"/>
+                    <spring:message code="user.logout"/>
                 </a>
                 <div class="dropdown">
-                    <button class="drop-button">LANG
-                        <i class="fa fa-caret-down"></i>
+                    <button class="drop-button">
+                        <spring:message code="button.select.lang"/>
                     </button>
                     <div class="dropdown-content">
-<%--                        <a href="?languageVar=en">EN</a>--%>
-<%--                        <a href="?languageVar=ru">RU</a>--%>
-                        <a href="<%=request.getContextPath()%>?languageVar=en">EN</a>
-                        <a href="<%=request.getContextPath()%>?languageVar=ru">RU</a>
+                        <a href="?languageVar=en">
+                            <spring:message code="button.name.en"/>
+                        </a>
+                        <a href="?languageVar=ru">
+                            <spring:message code="button.name.ru"/>
+                        </a>
                     </div>
                 </div>
             </div>
