@@ -17,10 +17,10 @@
             <form:form action="/news/add_news" modelAttribute="news" method="POST" cssStyle="margin-left: 30%">
                 <form:hidden path="id"/>
 
-                <form:errors path="title"/><br>
+                <form:errors path="title" cssClass="valid-mess"/><br>
                 <form:textarea path="title" placeholder="Title" rows="10" cols="20" cssClass="news-input" cssStyle="height: 20px"/><br>
 
-                <form:errors path="content"/><br>
+                <form:errors path="content" cssClass="valid-mess"/><br>
                 <form:textarea  path="content" placeholder="Content" rows="10" cols="20" cssClass="news-input" cssStyle="height: 120px"/><br>
                 <a style="float: left; margin-top: 30px" href="<c:url value="/news/main"/>">
                     <img style="width: 29px;" src="../../resources/img/chevron%20with%20circle%20left.svg" alt="back">

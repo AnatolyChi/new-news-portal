@@ -26,10 +26,10 @@
                 <div>
                     <form:form action="log_in" modelAttribute="user" method="POST" cssStyle="margin-left: 45%">
                         <form:hidden path="id"/>
-                        <form:errors path="login"/><br>
+                        <form:errors path="login" cssClass="valid-mess"/><br>
                         <form:input autocomplete="true" placeholder="Login" path="login" cssClass="user-input"/>
                         <br>
-                        <form:errors path="password"/><br>
+                        <form:errors path="password" cssClass="valid-mess"/><br>
                         <form:password placeholder="Password" path="password" cssClass="user-input"/>
                         <br>
                         <input style="margin-left: 40px; margin-top: 15px" class="submit-button" type="submit" value="submit">

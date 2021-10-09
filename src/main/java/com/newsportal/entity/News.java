@@ -12,6 +12,7 @@ import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
@@ -23,7 +24,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Table(name = "news")
 @Entity
-public class News {
+public class News implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

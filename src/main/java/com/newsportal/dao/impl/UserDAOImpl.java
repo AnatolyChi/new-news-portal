@@ -37,7 +37,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Optional<User> getUser(int id) {
         session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM User u WHERE u.user_id = :id", User.class)
+        return session.createQuery("FROM User u WHERE u.id = :id", User.class)
                 .setParameter("id", id)
                 .getResultList()
                 .stream()
