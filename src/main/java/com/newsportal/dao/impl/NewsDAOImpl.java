@@ -2,6 +2,7 @@ package com.newsportal.dao.impl;
 
 import com.newsportal.dao.NewsDAO;
 import com.newsportal.entity.News;
+import com.newsportal.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class NewsDAOImpl implements NewsDAO {
@@ -80,6 +82,24 @@ public class NewsDAOImpl implements NewsDAO {
         return session.createQuery("SELECT COUNT(*) FROM News", Number.class)
                 .getSingleResult()
                 .intValue();
+    }
+
+    @Override
+    public boolean addToFavourite(int userId, int newsId) {
+        session = sessionFactory.getCurrentSession();
+        User user = session.get(User.class, userId);
+        News news = session.get(News.class, newsId);
+        Set<News> newsSet = user.getFavouriteNews();
+        return newsSet.add(news);
+    }
+
+    @Override
+    public boolean deleteFromFavourite(int userId, int newsId) {
+        session = sessionFactory.getCurrentSession();
+        User user = session.get(User.class, userId);
+        News news = session.get(News.class, newsId);
+        Set<News> newsSet = user.getFavouriteNews();
+        return newsSet.remove(news);
     }
 
     @Override

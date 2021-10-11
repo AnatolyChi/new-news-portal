@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/news")
@@ -109,8 +110,29 @@ public class NewsController {
         return "redirect:" + NEWS_MAIN_URL;
     }
 
-    @GetMapping("/favourite_news")
-    public String favouriteNews() {
-        return "favourite_news";
+    @RequestMapping("/favourite_add/{newsId}")
+    public String favouriteNewsAdd(@PathVariable("newsId") int newsId, Model model) {
+        User user = (User) session.getSession().getAttribute("user");
+        if (newsService.addToFavourite(user.getId(), newsId)) {
+
+        } else {
+
+        }
+
+        // сделать проверку с выводом сообщения
+        return "redirect:/news/read/" + newsId;
+    }
+
+    @RequestMapping("/favourite_delete/{newsId}")
+    public String favouriteNewsDelete(@PathVariable("newsId") int newsId, Model model) {
+        User user = (User) session.getSession().getAttribute("user");
+        if (newsService.deleteFromFavourite(user.getId(), newsId)) {
+
+        } else {
+
+        }
+
+        // сделать проверку с выводом сообщения
+        return "redirect:/news/read/" + newsId;
     }
 }

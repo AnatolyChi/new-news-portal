@@ -13,6 +13,12 @@
         <c:import url="header_single.jsp"/>
 
         <div class="news-read">
+            <div>
+                <!-- messages after delete or add -->
+                <a href="<c:url value="/news/favourite_add/${news.id}"/>">ADD TO FAVOURITE</a><br>
+                <a href="<c:url value="/news/favourite_delete/${news.id}"/>">DELETE FROM FAVOURITE</a>
+            </div>
+
             <h3>${news.title}</h3>
             <hr>
             <p>${news.content}</p>

@@ -5,18 +5,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,7 +25,7 @@ public class News implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "news_id")
+    @Column(name = "news_id", nullable = false)
     private Integer id;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -50,12 +47,9 @@ public class News implements Serializable {
     @Column(name = "date", nullable = false, updatable = false)
     private LocalDate date;
 
-//    @PrePersist
-//    public void onCreate() {
-//        if (date == null) {
-//            date = LocalDate.now();
-//        }
-//    }
+    @ManyToMany(mappedBy = "favouriteNews")
+    @ToString.Exclude
+    private Set<User> userIsFavorites;
 
     @Override
     public boolean equals(Object o) {

@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Integer id;
 
-    @Size(min = 3, max = 30, message = "error size login")
+    @Size(min = 3, max = 30, message = "{valid}")
 //    @Pattern(regexp = "^[A-Za-z]([.A-Za-z0-9-]{1,10})([A-Za-z0-9])$")
     @Column(name = "login", length = 30, nullable = false)
     private String login;
@@ -57,16 +58,21 @@ public class User implements Serializable {
     @Column(name = "date_registered", nullable = false, updatable = false)
     private Timestamp dateRegistered;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    @ManyToMany
+    @JoinTable(
+            name = "favorite_news",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "news_id")
+    )
+    @ToString.Exclude
+    private Set<News> favouriteNews;
+
     @PrePersist
     protected void onCreate() {
-        if (dateRegistered == null) {
-            dateRegistered = new Timestamp(System.currentTimeMillis());
-        }
-
         if (role == null) {
             role = new Role();
             role.setId(2);

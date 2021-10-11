@@ -69,4 +69,16 @@ public class NewsServiceImpl implements NewsService {
     public int newsCount() {
         return newsDAO.countNews();
     }
+
+    @Override
+    @Transactional
+    public boolean addToFavourite(int userId, int newsId) {
+        return newsDAO.addToFavourite(userId, newsId);
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteFromFavourite(int userId, int newsId) {
+        return newsDAO.deleteFromFavourite(userId, newsId);
+    }
 }

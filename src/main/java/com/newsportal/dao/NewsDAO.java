@@ -9,10 +9,12 @@ public interface NewsDAO {
     List<News> getListNews();
     List<News> getListNews(int page);
     Optional<News> getNews(String title);
+    News getNews(int id);
+    int countNews();
     void saveNews(News news);
     void updateNews(int newsId);
     void deleteNews(int id);
-    News getNews(int id);
     void updateNews(News news);
-    int countNews();
+    boolean addToFavourite(int userId, int newsId);
+    boolean deleteFromFavourite(int userId, int newsId);
 }

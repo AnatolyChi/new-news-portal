@@ -15,4 +15,6 @@ public interface NewsService {
     News getNews(int id);
     void updateNews(News news);
     int newsCount();
+    boolean addToFavourite(int userId, int newsId);
+    boolean deleteFromFavourite(int userId, int newsId);
 }
