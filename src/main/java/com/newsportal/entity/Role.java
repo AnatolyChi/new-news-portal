@@ -5,19 +5,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
-@Table(name = "role", indexes = {
-        @Index(name = "role_role_name_uindex", columnList = "role_name", unique = true)
-})
 @Entity
 @Setter
 @Getter
 @ToString
 @NoArgsConstructor
+@Table(name = "role")
 public class Role implements Serializable {
 
     @Id
@@ -27,6 +27,23 @@ public class Role implements Serializable {
 
     @Column(name = "role_name", nullable = false, length = 30)
     private String roleName;
+
+//    @ManyToMany(mappedBy = "userRole", fetch = FetchType.LAZY)
+//    @ToString.Exclude
+//    private Set<User> users;
+
+    public Role(Integer id) {
+        this.id = id;
+    }
+
+    public Role(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public Role(Integer id, String roleName) {
+        this.id = id;
+        this.roleName = roleName;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -40,4 +57,9 @@ public class Role implements Serializable {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+//    @Override
+//    public String getAuthority() {
+//        return getRoleName();
+//    }
 }

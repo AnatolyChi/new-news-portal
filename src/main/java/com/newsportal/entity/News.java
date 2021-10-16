@@ -47,7 +47,7 @@ public class News implements Serializable {
     @Column(name = "date", nullable = false, updatable = false)
     private LocalDate date;
 
-    @ManyToMany(mappedBy = "favouriteNews")
+    @ManyToMany(mappedBy = "favouriteNews", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<User> userIsFavorites;
 

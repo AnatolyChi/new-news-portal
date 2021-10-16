@@ -58,8 +58,8 @@ public class NewsDAOImpl implements NewsDAO {
 
     @Override
     public Optional<News> getNews(String title) {
-        session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM News n WHERE n.title = :title", News.class)
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM News n WHERE n.title = :title", News.class)
                 .setParameter("title", title)
                 .getResultList()
                 .stream()
@@ -68,8 +68,8 @@ public class NewsDAOImpl implements NewsDAO {
 
     @Override
     public void updateNews(News news) {
-        session = sessionFactory.getCurrentSession();
-        session.createQuery("UPDATE News n SET n.title = :title, n.content = :content WHERE n.id = :id")
+        sessionFactory.getCurrentSession()
+                .createQuery("UPDATE News n SET n.title = :title, n.content = :content WHERE n.id = :id")
                 .setParameter("title", news.getTitle())
                 .setParameter("content", news.getContent())
                 .setParameter("id", news.getId())
@@ -78,8 +78,8 @@ public class NewsDAOImpl implements NewsDAO {
 
     @Override
     public int countNews() {
-        session = sessionFactory.getCurrentSession();
-        return session.createQuery("SELECT COUNT(*) FROM News", Number.class)
+        return sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(*) FROM News", Number.class)
                 .getSingleResult()
                 .intValue();
     }

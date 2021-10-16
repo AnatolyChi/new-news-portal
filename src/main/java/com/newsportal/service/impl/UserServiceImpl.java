@@ -7,14 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAO userDAO;
+
+//    @Autowired
+//    private BCryptPasswordEncoder encoder;
 
     @Override
     @Transactional
@@ -24,14 +26,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void deleteUser(int id) {
+    public boolean saveUser(User user) {
+        Optional<User> userFromDB = userDAO.getUser(user.getUsername());
 
-    }
+        if (userFromDB.isPresent()) {
+            return false;
+        }
 
-    @Override
-    @Transactional
-    public void saveUser(User user) {
         userDAO.saveUser(user);
+        return true;
     }
 
     @Override
@@ -51,4 +54,15 @@ public class UserServiceImpl implements UserService {
     public Optional<User> getUser(String login, String password) {
         return userDAO.getUser(login, password);
     }
+
+//    @Override
+//    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+//        User user = userDAO.getUser(login).get();
+//
+//        if (user == null) {
+//            throw new UsernameNotFoundException("error");
+//        }
+//
+//        return user;
+//    }
 }

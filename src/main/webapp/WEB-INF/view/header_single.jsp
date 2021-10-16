@@ -15,13 +15,14 @@
             <h1 style="color: white; margin: 5px 15px 15px;float: left">GREAT NEWS</h1>
             <div class="top-nav-right">
 
-                <c:if test="${sessionScope.user.role.roleName.equals('Admin')}">
-                    <a href="<c:url value="/news/add_news"/>">ADD NEWS</a>
-                </c:if>
+<%--                <c:if test="${sessionScope.user.userRole.equals('Admin')}">--%>
+<%--                    --%>
+<%--                </c:if>--%>
+                <a href="<c:url value="/news/add_news"/>">ADD NEWS</a>
                 <a href="<c:url value="/news/user/own_page"/>">OWN PAGE</a>
                 <a href="<c:url value="/news/favourite_news"/>">FAVOURITE NEWS</a>
                 <a href="<c:url value="#"/>">OFFER NEWS</a>
-                <a href="<c:url value="/news/user/log_out"/>">
+                <a href="<c:url value="/log_out"/>">
                     <spring:message code="user.logout"/>
                 </a>
                 <div class="dropdown">

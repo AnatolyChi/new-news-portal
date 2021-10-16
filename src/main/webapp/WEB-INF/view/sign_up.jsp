@@ -10,34 +10,51 @@
     </head>
     <body>
 
-        <c:choose>
+        <div>
+            <h1 class="great-news-logo">GREAT NEWS</h1>
+        </div>
+        <div style="margin-bottom: 0; height: 50px">
+            <h1 class="sign-and-log">SIGN UP</h1>
+        </div>
+        <div>
+            <form:form action="sign_up" modelAttribute="user" method="POST" cssStyle="margin-left: 45%">
+                <form:hidden path="id"/>
+                <form:errors path="username" cssClass="valid-mess"/><br>
+                <form:input autocomplete="true" placeholder="Login" path="username" cssClass="user-input"/>
+                <br>
+                <form:errors path="password" cssClass="valid-mess"/><br>
+                <form:password placeholder="Password" path="password" cssClass="user-input"/>
+                <br>
+                <input style="margin-left: 40px; margin-top: 15px" class="submit-button" type="submit" value="submit">
+            </form:form>
+        </div>
 
-            <c:when test="${not empty sessionScope.user}">
-                <c:redirect url="/news/main"/>
-            </c:when>
+<%--        <c:choose>--%>
+<%--            <c:when test="${not empty sessionScope.user}">--%>
+<%--                <c:redirect url="/news/main"/>--%>
+<%--            </c:when>--%>
 
-            <c:when test="${empty sessionScope.user}">
-                <div>
-                    <h1 class="great-news-logo">GREAT NEWS</h1>
-                </div>
-                <div style="margin-bottom: 0; height: 50px">
-                    <h1 class="sign-and-log">SIGN UP</h1>
-                </div>
-                <div>
-                    <form:form action="sign_up" modelAttribute="user" method="POST" cssStyle="margin-left: 45%">
-                        <form:hidden path="id"/>
-                        <form:errors path="login" cssClass="valid-mess"/><br>
-                        <form:input autocomplete="true" placeholder="Login" path="login" cssClass="user-input"/>
-                        <br>
-                        <form:errors path="password" cssClass="valid-mess"/><br>
-                        <form:password placeholder="Password" path="password" cssClass="user-input"/>
-                        <br>
-                        <input style="margin-left: 40px; margin-top: 15px" class="submit-button" type="submit" value="submit">
-                    </form:form>
-                </div>
-            </c:when>
-
-        </c:choose>
+<%--            <c:when test="${empty sessionScope.user}">--%>
+<%--                <div>--%>
+<%--                    <h1 class="great-news-logo">GREAT NEWS</h1>--%>
+<%--                </div>--%>
+<%--                <div style="margin-bottom: 0; height: 50px">--%>
+<%--                    <h1 class="sign-and-log">SIGN UP</h1>--%>
+<%--                </div>--%>
+<%--                <div>--%>
+<%--                    <form:form action="sign_up" modelAttribute="user" method="POST" cssStyle="margin-left: 45%">--%>
+<%--                        <form:hidden path="id"/>--%>
+<%--                        <form:errors path="login" cssClass="valid-mess"/><br>--%>
+<%--                        <form:input autocomplete="true" placeholder="Login" path="login" cssClass="user-input"/>--%>
+<%--                        <br>--%>
+<%--                        <form:errors path="password" cssClass="valid-mess"/><br>--%>
+<%--                        <form:password placeholder="Password" path="password" cssClass="user-input"/>--%>
+<%--                        <br>--%>
+<%--                        <input style="margin-left: 40px; margin-top: 15px" class="submit-button" type="submit" value="submit">--%>
+<%--                    </form:form>--%>
+<%--                </div>--%>
+<%--            </c:when>--%>
+<%--        </c:choose>--%>
 
         <c:import url="footer.jsp"/>
     </body>

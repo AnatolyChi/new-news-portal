@@ -27,15 +27,21 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Integer id;
 
-    @Size(min = 3, max = 30, message = "{valid}")
+//    @Size(min = 3, max = 30, message = "{valid}")
 //    @Pattern(regexp = "^[A-Za-z]([.A-Za-z0-9-]{1,10})([A-Za-z0-9])$")
-    @Column(name = "login", length = 30, nullable = false)
-    private String login;
+    @Column(name = "username", length = 30, nullable = false)
+    private String username;
 
-    @Size(min = 5, max = 30, message = "error size password")
+//    @Size(min = 5, max = 30, message = "error size password")
 //    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{5,}")
     @Column(name = "password", length = 256, nullable = false)
     private String password;
+
+    @Column(name = "role")
+    private String role;
+
+    @Column(name = "enabled")
+    private boolean enabled;
 
     @Pattern(regexp = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$")
     @Column(name = "firstname", length = 30)
@@ -58,11 +64,16 @@ public class User implements Serializable {
     @Column(name = "date_registered", nullable = false, updatable = false)
     private Timestamp dateRegistered;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "user_role",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id")
+//    )
+//    @ToString.Exclude
+//    private Set<Role> userRole;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "favorite_news",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -70,14 +81,6 @@ public class User implements Serializable {
     )
     @ToString.Exclude
     private Set<News> favouriteNews;
-
-    @PrePersist
-    protected void onCreate() {
-        if (role == null) {
-            role = new Role();
-            role.setId(2);
-        }
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -91,4 +94,29 @@ public class User implements Serializable {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return getUserRole();
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return login;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
 }

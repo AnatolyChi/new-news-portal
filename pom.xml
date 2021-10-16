@@ -92,9 +92,17 @@
 			<version>1.2.0</version>
 		</dependency>
 		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.2.0.Final</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- LOMBOK -->
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.20</version>
+			<version>1.18.22</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -103,12 +111,8 @@
 			<version>0.5</version>
 			<scope>compile</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>6.2.0.Final</version>
-            <scope>compile</scope>
-        </dependency>
+
+		<!-- SECURITY -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -126,6 +130,18 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>5.5.1</version>
 			<scope>compile</scope>
+		</dependency>
+
+		<!-- LOG -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.14.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.14.1</version>
 		</dependency>
 	</dependencies>
 </project>

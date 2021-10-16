@@ -10,7 +10,7 @@
 
   <body>
 
-    <p>Login:       ${sessionScope.user.login}</p>
+    <p>Login:       ${sessionScope.user.username}</p>
     <p>Firstname:   ${sessionScope.user.firstname}</p>
     <p>Lastname:    ${sessionScope.user.lastname}</p>
     <p>Age:         ${sessionScope.user.age}</p>

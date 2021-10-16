@@ -22,7 +22,7 @@
 
                 <form:errors path="content" cssClass="valid-mess"/><br>
                 <form:textarea  path="content" placeholder="Content" rows="10" cols="20" cssClass="news-input" cssStyle="height: 120px"/><br>
-                <a style="float: left; margin-top: 30px" href="<c:url value="/news/main"/>">
+                <a style="float: left; margin-top: 30px" href="<c:url value="/news/"/>">
                     <img style="width: 29px;" src="../../resources/img/chevron%20with%20circle%20left.svg" alt="back">
                 </a>
                 <input style="margin-top: 30px; margin-left: 230px; float: left" class="submit-button" type="submit" value="submit">

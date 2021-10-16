@@ -3,7 +3,6 @@ package com.newsportal.controller;
 import com.newsportal.entity.News;
 import com.newsportal.entity.User;
 import com.newsportal.service.NewsService;
-import com.newsportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -13,20 +12,17 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/news")
 public class NewsController {
 
-    private static final String MAIN_PAGE = "main";
+    private static final String MAIN_PAGE = "main_news";
     private static final String ADD_NEWS_PAGE = "add_news";
     private static final String UPDATE_NEWS_PAGE = "update_news";
-    private static final String NEWS_MAIN_URL = "/news/main";
+    private static final String NEWS_MAIN_URL = "/news/";
     private static final String NEWS_ATTRIBUTE = "news";
 
     @Autowired
@@ -41,11 +37,6 @@ public class NewsController {
     }
 
     @RequestMapping("/")
-    public String base() {
-        return "main";
-    }
-
-    @RequestMapping("/main")
     public String mainNews(@RequestParam(defaultValue = "1") int page, Model model) {
         List<News> newsList = newsService.getListNews(page);
         int newsCount = newsService.newsCount();
@@ -87,7 +78,7 @@ public class NewsController {
         return "read_news";
     }
 
-    @RequestMapping("/delete/{newsId}")
+    @DeleteMapping("/delete/{newsId}")
     public String deleteNews(@PathVariable("newsId") int newsId) {
         newsService.deleteNews(newsId);
         return "redirect:" + NEWS_MAIN_URL;
@@ -99,7 +90,7 @@ public class NewsController {
         return UPDATE_NEWS_PAGE;
     }
 
-    @PostMapping("/update/{newsId}")
+    @PutMapping("/update/{newsId}")
     public String updateNews(@Valid News news, BindingResult result, @PathVariable("newsId") int newsId) {
         if (result.hasErrors()) {
             return UPDATE_NEWS_PAGE;

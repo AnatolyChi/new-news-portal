@@ -1,43 +1,57 @@
 package com.newsportal.dao.impl;
 
 import com.newsportal.dao.UserDAO;
+import com.newsportal.entity.Role;
 import com.newsportal.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.Query;
+import java.util.*;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
 
+    public static final String NO_BCRIPT = "{noop}";
+
     @Autowired
     private SessionFactory sessionFactory;
-    private Session session;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Override
     public List<User> getListUsers() {
-        return null;
-    }
-
-    @Override
-    public void deleteUser(int id) {
-        session = sessionFactory.getCurrentSession();
-        session.delete(id);
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM User ORDER BY id", User.class).list();
     }
 
     @Override
     public void saveUser(User user) {
-        session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
+
+//        Role role = session.createQuery("FROM Role r WHERE roleName = :roleName", Role.class)
+//                .setParameter("roleName", "ROLE_USER")
+//                .getSingleResult();
+
+//        user.setPassword(encoder.encode(user.getPassword()));
+//        user.setUserRole(Collections.singleton(role));
+
+//        user.setPassword(NO_BCRIPT + user.getPassword());
+        user.setPassword(NO_BCRIPT + encoder.encode(user.getPassword()));
+        user.setRole("ROLE_USER");
+        user.setEnabled(true);
+
         session.save(user);
     }
 
     @Override
     public Optional<User> getUser(int id) {
-        session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM User u WHERE u.id = :id", User.class)
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM User u WHERE u.id = :id", User.class)
                 .setParameter("id", id)
                 .getResultList()
                 .stream()
@@ -46,9 +60,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Optional<User> getUser(String login) {
-        session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM User u WHERE u.login = :login", User.class)
-                .setParameter("login", login)
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM User u WHERE u.username = :username", User.class)
+                .setParameter("username", login)
                 .getResultList()
                 .stream()
                 .findFirst();
@@ -56,10 +70,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Optional<User> getUser(String login, String password) {
-        session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM User u WHERE u.login = :login AND u.password = :password", User.class)
-                .setParameter("login", login)
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM User u WHERE u.username = :username AND u.password = :password", User.class)
+                .setParameter("username", login)
                 .setParameter("password", password)
+//                .setParameter("password", encoder.encode(password))
                 .getResultList()
                 .stream()
                 .findFirst();

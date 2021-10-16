@@ -26,6 +26,11 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+<!--	<bean id="controllerRegistry" class="org.springframework.web.servlet.config.annotation.ViewControllerRegistry">-->
+<!--		<constructor-arg ref="webApplicationContext"/>-->
+<!--		<mvc:view-controller path="" view-name=""/>-->
+<!--	</bean>-->
+
     <!-- Define Database DataSource / connection pool -->
 	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
@@ -87,7 +92,7 @@
 		<property name="validationMessageSource" ref="messageSource"/>
 	</bean>
 
-	<import resource="security.xml" />
+<!--	<import resource="security-config.xml" />-->
 
 	<bean id="expressionHandler"
 		  class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
