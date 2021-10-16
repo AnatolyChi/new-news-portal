@@ -14,7 +14,7 @@
     <body>
         <c:import url="header_single.jsp"/>
 
-        <security:authorize access="hasRole('ROLE_ADMIN')">
+        <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
             <c:forEach var="news" items="${newsList}">
                 <div class="newsMain">
                     <div style="float: left">

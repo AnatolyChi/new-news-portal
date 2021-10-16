@@ -14,7 +14,7 @@
             <h1 class="great-news-logo">GREAT NEWS</h1>
         </div>
         <div style="margin-right: 44%">
-            <a class="base-button" href="<c:url value="/log_in"/>">LOG IN</a>
+            <a class="base-button" href="<c:url value="/login"/>">LOG IN</a>
             <a class="base-button" href="<c:url value="/sign_up"/>">SIGN UP</a>
         </div>
 

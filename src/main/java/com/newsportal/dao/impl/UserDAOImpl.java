@@ -20,8 +20,8 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+//    @Autowired
+//    private BCryptPasswordEncoder encoder;
 
     @Override
     public List<User> getListUsers() {
@@ -40,8 +40,7 @@ public class UserDAOImpl implements UserDAO {
 //        user.setPassword(encoder.encode(user.getPassword()));
 //        user.setUserRole(Collections.singleton(role));
 
-//        user.setPassword(NO_BCRIPT + user.getPassword());
-        user.setPassword(NO_BCRIPT + encoder.encode(user.getPassword()));
+        user.setPassword(NO_BCRIPT + user.getPassword());
         user.setRole("ROLE_USER");
         user.setEnabled(true);
 

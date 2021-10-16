@@ -19,7 +19,7 @@ public class AuthenticationController {
 
     private static final String USER_ATTRIBUTE = "user";
     private static final String SIGN_UP_PAGE = "sign_up";
-    private static final String LOG_IN_PAGE = "log_in";
+    private static final String LOG_IN_PAGE = "login";
     private static final String ACCESS_DENIED_PAGE = "access_denied";
     private static final String AUTH_MAIN_FORM_PAGE = "main_form";
     private static final String NEWS_MAIN_URL = "/news/";
@@ -58,40 +58,40 @@ public class AuthenticationController {
         } else if (!userService.saveUser(user)) {
 
             // сообщение о существовании введенного логина
-            System.err.println(user);
             return SIGN_UP_PAGE;
         }
 
-        session.getSession().setAttribute(USER_ATTRIBUTE, user);
-        System.err.println(user);
-        return "redirect:" + NEWS_MAIN_URL;
+//        session.getSession().setAttribute(USER_ATTRIBUTE, user);
+
+        // редирект на страницу логина с сообщением об успешной регистрации
+        return "redirect:/login";
     }
 
-    @GetMapping("/log_in")
+    @GetMapping("/login")
     public String initLogIn(Model model) {
         model.addAttribute(USER_ATTRIBUTE, new User());
         return LOG_IN_PAGE;
     }
 
-    @PostMapping("/log_in")
-    public String createLogIn(@Valid @ModelAttribute User user, BindingResult result) {
-        if (result.hasErrors()) {
-            return LOG_IN_PAGE;
-        }
+//    @PostMapping("/log_in")
+//    public String createLogIn(@Valid @ModelAttribute User user, BindingResult result) {
+//        if (result.hasErrors()) {
+//            return LOG_IN_PAGE;
+//        }
+//
+//        Optional<User> userOptional = userService.getUser(user.getUsername(), user.getPassword());
+//        if (userOptional.isPresent()) {
+//            session.getSession().setAttribute(USER_ATTRIBUTE, userOptional.get());
+//            return "redirect:" + NEWS_MAIN_URL;
+//        }
+//
+//        // сообщение о неверности логина или пароля
+//        return LOG_IN_PAGE;
+//    }
 
-        Optional<User> userOptional = userService.getUser(user.getUsername(), user.getPassword());
-        if (userOptional.isPresent()) {
-            session.getSession().setAttribute(USER_ATTRIBUTE, userOptional.get());
-            return "redirect:" + NEWS_MAIN_URL;
-        }
-
-        // сообщение о неверности логина или пароля
-        return LOG_IN_PAGE;
-    }
-
-    @GetMapping("/log_out")
-    public String destroyUser() {
-        session.getSession().invalidate();
-        return "redirect:" + NEWS_MAIN_URL;
-    }
+//    @GetMapping("/log_out")
+//    public String destroyUser() {
+//        session.getSession().invalidate();
+//        return "redirect:" + NEWS_MAIN_URL;
+//    }
 }
