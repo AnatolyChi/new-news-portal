@@ -19,7 +19,7 @@
                     <a href="<c:url value="/news/add_news"/>">ADD NEWS</a>
                 </security:authorize>
                 <a href="<c:url value="/news/user/own_page"/>">OWN PAGE</a>
-                <a href="<c:url value="#"/>">FAVOURITE NEWS</a>
+                <a href="<c:url value="/news/user/favourite_news"/>">FAVOURITE NEWS</a>
                 <a href="<c:url value="#"/>">OFFER NEWS</a>
                 <a href="<c:url value="/perform_logout"/>">
                     <spring:message code="user.logout"/>

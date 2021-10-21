@@ -73,7 +73,7 @@ public class User implements UserDetails, Serializable {
     @ToString.Exclude
     private Set<Role> userRole;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "favorite_news",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -14,8 +15,12 @@
 
         <div class="news-read">
             <div>
-                <!-- messages after delete or add -->
+                <c:if test="${not empty param.error_add}"><spring:message code="local.news.favourite.add.err"/></c:if>
+                <c:if test="${not empty param.success_add}"><spring:message code="local.news.favourite.add.suc"/></c:if>
                 <a href="<c:url value="/news/favourite_add/${news.id}"/>">ADD TO FAVOURITE</a><br>
+
+                <c:if test="${not empty param.error_delete}"><spring:message code="local.news.favourite.delete.err"/></c:if>
+                <c:if test="${not empty param.success_delete}"><spring:message code="local.news.favourite.delete.suc"/></c:if>
                 <a href="<c:url value="/news/favourite_delete/${news.id}"/>">DELETE FROM FAVOURITE</a>
             </div>
 

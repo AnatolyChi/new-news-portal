@@ -87,8 +87,8 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public boolean addToFavourite(int userId, int newsId) {
         session = sessionFactory.getCurrentSession();
-        User user = session.get(User.class, userId);
-        News news = session.get(News.class, newsId);
+        User user = session.load(User.class, userId);
+        News news = session.load(News.class, newsId);
         Set<News> newsSet = user.getFavouriteNews();
         return newsSet.add(news);
     }
@@ -96,8 +96,8 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public boolean deleteFromFavourite(int userId, int newsId) {
         session = sessionFactory.getCurrentSession();
-        User user = session.get(User.class, userId);
-        News news = session.get(News.class, newsId);
+        User user = session.load(User.class, userId);
+        News news = session.load(News.class, newsId);
         Set<News> newsSet = user.getFavouriteNews();
         return newsSet.remove(news);
     }

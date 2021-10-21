@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -27,12 +26,18 @@ public class NewsController {
     private static final String UPDATE_NEWS_PAGE = "update_news";
     private static final String READ_NEWS_PAGE = "read_news";
     private static final String NEWS_MAIN_URL_REDIRECT = "redirect:/news/";
+    private static final String READ_NEWS_REDIRECT = "redirect:/news/read/";
 
     private static final String NEWS_ATTRIBUTE = "news";
     private static final String PAGE_ATTRIBUTE = "page";
     private static final String NEWS_COUNT_ATTRIBUTE = "newsCount";
     private static final String PAGES_COUNT_ATTRIBUTE = "pagesCount";
     private static final String NEWS_LIST_ATTRIBUTE = "newsList";
+
+    private static final String ERROR_ADD_FAVOURITE_PARAM = "?error_add=1";
+    private static final String ERROR_DELETE_FAVOURITE_PARAM = "?error_delete=1";
+    private static final String SUCCESS_ADD_FAVOURITE_PARAM = "?success_add=1";
+    private static final String SUCCESS_DELETE_FAVOURITE_PARAM = "?success_delete=1";
 
     @Autowired
     private NewsService newsService;
@@ -76,7 +81,6 @@ public class NewsController {
         if (user.isPresent()) {
             if (newsService.getNews(news.getTitle()).isEmpty()) {
                 news.setUser(user.get());
-                System.err.println(news);
                 newsService.saveNews(news);
                 return NEWS_MAIN_URL_REDIRECT;
             }
@@ -115,28 +119,28 @@ public class NewsController {
     }
 
     @RequestMapping("/favourite_add/{newsId}")
-    public String favouriteNewsAdd(@PathVariable("newsId") int newsId, Model model, Principal principal) {
-        User user = (User) principal;
-        if (newsService.addToFavourite(user.getId(), newsId)) {
+    public String favouriteNewsAdd(@PathVariable("newsId") int newsId, Principal principal) {
+        Optional<User> user = userService.getUser(principal.getName());
 
-        } else {
-
+        if (user.isPresent()) {
+            if (newsService.addToFavourite(user.get().getId(), newsId)) {
+                return READ_NEWS_REDIRECT + newsId + SUCCESS_ADD_FAVOURITE_PARAM;
+            }
         }
 
-        // сделать проверку с выводом сообщения
-        return "redirect:/news/read/" + newsId;
+        return READ_NEWS_REDIRECT + newsId + ERROR_ADD_FAVOURITE_PARAM;
     }
 
     @RequestMapping("/favourite_delete/{newsId}")
-    public String favouriteNewsDelete(@PathVariable("newsId") int newsId, Model model, Principal principal) {
-        User user = (User) principal;
-        if (newsService.deleteFromFavourite(user.getId(), newsId)) {
+    public String favouriteNewsDelete(@PathVariable("newsId") int newsId, Principal principal) {
+        Optional<User> user = userService.getUser(principal.getName());
 
-        } else {
-
+        if (user.isPresent()) {
+            if (newsService.deleteFromFavourite(user.get().getId(), newsId)) {
+                return READ_NEWS_REDIRECT + newsId + SUCCESS_DELETE_FAVOURITE_PARAM;
+            }
         }
 
-        // сделать проверку с выводом сообщения
-        return "redirect:/news/read/" + newsId;
+        return READ_NEWS_REDIRECT + newsId + ERROR_DELETE_FAVOURITE_PARAM;
     }
 }
