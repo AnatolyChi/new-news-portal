@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/news/user")
 public class UserController {
 
+    private static final String OWN_PAGE = "own_page";
+
     @Autowired
     private UserService userService;
 
     @GetMapping("/own_page")
     public String ownPage() {
-        return "own_page";
+        return OWN_PAGE;
     }
 }

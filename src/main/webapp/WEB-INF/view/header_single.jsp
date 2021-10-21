@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -14,11 +15,9 @@
         <nav class="top-nav">
             <h1 style="color: white; margin: 5px 15px 15px;float: left">GREAT NEWS</h1>
             <div class="top-nav-right">
-
-<%--                <c:if test="${sessionScope.user.userRole.equals('Admin')}">--%>
-<%--                    --%>
-<%--                </c:if>--%>
-                <a href="<c:url value="/news/add_news"/>">ADD NEWS</a>
+                <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <a href="<c:url value="/news/add_news"/>">ADD NEWS</a>
+                </security:authorize>
                 <a href="<c:url value="/news/user/own_page"/>">OWN PAGE</a>
                 <a href="<c:url value="#"/>">FAVOURITE NEWS</a>
                 <a href="<c:url value="#"/>">OFFER NEWS</a>

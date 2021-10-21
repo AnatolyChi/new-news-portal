@@ -18,7 +18,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @Table(name = "role")
-public class Role implements Serializable {
+public class Role implements GrantedAuthority, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +28,9 @@ public class Role implements Serializable {
     @Column(name = "role_name", nullable = false, length = 30)
     private String roleName;
 
-//    @ManyToMany(mappedBy = "userRole", fetch = FetchType.LAZY)
-//    @ToString.Exclude
-//    private Set<User> users;
+    @ManyToMany(mappedBy = "userRole")
+    @ToString.Exclude
+    private Set<User> users;
 
     public Role(Integer id) {
         this.id = id;
@@ -58,8 +58,8 @@ public class Role implements Serializable {
         return Objects.hashCode(id);
     }
 
-//    @Override
-//    public String getAuthority() {
-//        return getRoleName();
-//    }
+    @Override
+    public String getAuthority() {
+        return getRoleName();
+    }
 }

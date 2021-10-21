@@ -22,13 +22,13 @@
 
                 <c:if test="${not empty param.error}">
                     <span style="color: red; font-size: 17px;">
-<%--                        <spring:message code="local.error.authenticate.user" />--%>
+                        <spring:message code="local.valid.authorization" />
                     </span>
                 </c:if>
 
                 <c:if test="${not empty param.registrationOK}">
                     <span style="color: #408080; font-size: 17px;">
-<%--                        <spring:message code="local.login.message.registration.ok" />--%>
+                        <spring:message code="user.complete.reg" />
                     </span>
                 </c:if>
 

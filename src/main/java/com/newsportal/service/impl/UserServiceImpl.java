@@ -4,19 +4,19 @@ import com.newsportal.dao.UserDAO;
 import com.newsportal.entity.User;
 import com.newsportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserDAO userDAO;
-
-//    @Autowired
-//    private BCryptPasswordEncoder encoder;
 
     @Override
     @Transactional
@@ -55,14 +55,15 @@ public class UserServiceImpl implements UserService {
         return userDAO.getUser(login, password);
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-//        User user = userDAO.getUser(login).get();
-//
-//        if (user == null) {
-//            throw new UsernameNotFoundException("error");
-//        }
-//
-//        return user;
-//    }
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userDAO.getUser(username);
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("error");
+        }
+
+        return user.get();
+    }
 }

@@ -6,11 +6,14 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,7 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "user")
 @Entity
-public class User implements Serializable {
+public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,9 +39,6 @@ public class User implements Serializable {
 //    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{5,}")
     @Column(name = "password", length = 256, nullable = false)
     private String password;
-
-    @Column(name = "role")
-    private String role;
 
     @Column(name = "enabled")
     private boolean enabled;
@@ -64,14 +64,14 @@ public class User implements Serializable {
     @Column(name = "date_registered", nullable = false, updatable = false)
     private Timestamp dateRegistered;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "user_role",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
-//    @ToString.Exclude
-//    private Set<Role> userRole;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    @ToString.Exclude
+    private Set<Role> userRole;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -95,28 +95,23 @@ public class User implements Serializable {
         return Objects.hashCode(id);
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return getUserRole();
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return login;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getUserRole();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 }

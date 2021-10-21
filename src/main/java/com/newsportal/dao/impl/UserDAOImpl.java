@@ -33,15 +33,13 @@ public class UserDAOImpl implements UserDAO {
     public void saveUser(User user) {
         Session session = sessionFactory.getCurrentSession();
 
-//        Role role = session.createQuery("FROM Role r WHERE roleName = :roleName", Role.class)
-//                .setParameter("roleName", "ROLE_USER")
-//                .getSingleResult();
-
-//        user.setPassword(encoder.encode(user.getPassword()));
-//        user.setUserRole(Collections.singleton(role));
+        Role role = session.createQuery("FROM Role r WHERE roleName = :roleName", Role.class)
+                .setParameter("roleName", "ROLE_USER")
+                .getSingleResult();
 
         user.setPassword(NO_BCRIPT + user.getPassword());
-        user.setRole("ROLE_USER");
+        user.setUserRole(Collections.singleton(role));
+
         user.setEnabled(true);
 
         session.save(user);
