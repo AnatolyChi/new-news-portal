@@ -24,10 +24,10 @@
                     <div>
                         <p>${news.title}</p>
                     </div>
-                    <a href="<c:url value="/news/read/${news.id}"/>">READ</a>
+                    <a href="<c:url value="/news/read/${news.id}"/>"><spring:message code="local.news.read"/></a>
                     <security:authorize access="hasRole('ROLE_ADMIN')">
-                        <a href="<c:url value="/news/update/${news.id}"/>">UPDATE</a>
-                        <a href="<c:url value="/news/delete/${news.id}"/>">DELETE</a>
+                        <a href="<c:url value="/news/update/${news.id}"/>"><spring:message code="local.news.update"/></a>
+                        <a href="<c:url value="/news/delete/${news.id}"/>"><spring:message code="local.news.delete"/></a>
                     </security:authorize>
                 </div>
             </c:forEach>

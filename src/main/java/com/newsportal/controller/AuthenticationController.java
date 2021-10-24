@@ -42,13 +42,13 @@ public class AuthenticationController {
     }
 
     @GetMapping("/sign_up")
-    public String initSignUp(Model model) {
+    public String getSignUpPage(Model model) {
         model.addAttribute(USER_ATTRIBUTE, new User());
         return SIGN_UP_PAGE;
     }
 
     @PostMapping("/sign_up")
-    public String createSignUp(@Valid @ModelAttribute User user, BindingResult result) {
+    public String performSignUp(@Valid @ModelAttribute User user, BindingResult result) {
         if (result.hasErrors()) {
             return SIGN_UP_PAGE;
         } else if (!userService.saveUser(user)) {
@@ -59,7 +59,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/login")
-    public String initLogIn(Model model) {
+    public String getLogInPage(Model model) {
         model.addAttribute(USER_ATTRIBUTE, new User());
         return LOG_IN_PAGE;
     }

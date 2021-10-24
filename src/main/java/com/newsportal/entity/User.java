@@ -30,12 +30,14 @@ public class User implements UserDetails, Serializable {
     @Column(name = "user_id")
     private Integer id;
 
-//    @Size(min = 3, max = 30, message = "{valid}")
+    @NotNull(message = "{user.valid.notnull}")
+    @Size(min = 3, max = 30, message = "{user.valid.username}")
 //    @Pattern(regexp = "^[A-Za-z]([.A-Za-z0-9-]{1,10})([A-Za-z0-9])$")
     @Column(name = "username", length = 30, nullable = false)
     private String username;
 
-//    @Size(min = 5, max = 30, message = "error size password")
+    @NotNull(message = "{user.valid.notnull}")
+    @Size(min = 5, max = 30, message = "{user.valid.password}")
 //    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{5,}")
     @Column(name = "password", length = 256, nullable = false)
     private String password;
@@ -43,20 +45,20 @@ public class User implements UserDetails, Serializable {
     @Column(name = "enabled")
     private boolean enabled;
 
-    @Pattern(regexp = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$")
+    @Pattern(regexp = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$", message = "{user.valid.firstname}")
     @Column(name = "firstname", length = 30)
     private String firstname;
 
-    @Pattern(regexp = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$")
+    @Pattern(regexp = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$", message = "{user.valid.lastname}")
     @Column(name = "lastname", length = 30)
     private String lastname;
 
-    @Email(message = "Email should be valid")
+    @Email(message = "{user.valid.email}")
     @Column(name = "email", length = 30)
     private String email;
 
-    @Min(18)
-    @Max(70)
+    @Min(value = 18, message = "{user.valid.age}")
+    @Max(value = 70, message = "{user.valid.age}")
     @Column(name = "age")
     private Integer age;
 
@@ -73,6 +75,7 @@ public class User implements UserDetails, Serializable {
     @ToString.Exclude
     private Set<Role> userRole;
 
+    // Может лучше не стоит подгружать
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "favorite_news",

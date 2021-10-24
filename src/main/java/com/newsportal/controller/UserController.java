@@ -17,13 +17,16 @@ public class UserController {
     private static final String OWN_PAGE = "own_page";
     private static final String FAVOURITE_NEWS = "favourite_news";
 
+    private static final String USER_ATTRIBUTE = "user";
     private static final String FAVOURITE_NEWS_ATTRIBUTE = "favouriteNewsList";
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/own_page")
-    public String ownPage() {
+    public String ownPage(Principal principal, Model model) {
+        Optional<User> user = userService.getUser(principal.getName());
+        model.addAttribute(USER_ATTRIBUTE, user.get());
         return OWN_PAGE;
     }
 

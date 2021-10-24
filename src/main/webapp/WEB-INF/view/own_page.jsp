@@ -1,4 +1,5 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -9,8 +10,13 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700">
     </head>
     <body>
-        <security:authorize access="isAuthenticated()">
-            authenticated as <security:authentication property="principal.username" />
-        </security:authorize>
+
+        <div>
+            <p><spring:message code="local.firstname"/> : ${user.firstname}</p>
+            <p><spring:message code="local.lastname"/> : ${user.lastname}</p>
+            <p><spring:message code="local.age"/> : ${user.age}</p>
+            <p><spring:message code="local.date.reg"/> : ${user.dateRegistered}</p>
+        </div>
+
     </body>
 </html>

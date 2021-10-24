@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -9,7 +10,9 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700">
     </head>
     <body>
-        <h1 style="text-align: center; margin-top: 100px">ACCESS DENIED</h1>
+        <h1 style="text-align: center; margin-top: 100px">
+            <spring:message code="local.error.access"/>
+        </h1>
         <c:import url="footer.jsp"/>
     </body>
 </html>

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -14,8 +15,12 @@
             <h1 class="great-news-logo">GREAT NEWS</h1>
         </div>
         <div style="margin-right: 44%">
-            <a class="base-button" href="<c:url value="/login"/>">LOG IN</a>
-            <a class="base-button" href="<c:url value="/sign_up"/>">SIGN UP</a>
+            <a class="base-button" href="<c:url value="/login"/>">
+                <spring:message code="user.login"/>
+            </a>
+            <a class="base-button" href="<c:url value="/sign_up"/>">
+                <spring:message code="user.signup"/>
+            </a>
         </div>
 
         <c:import url="footer.jsp"/>

@@ -15,10 +15,12 @@
             <h1 class="great-news-logo">GREAT NEWS</h1>
         </div>
         <div style="margin-bottom: 0; height: 50px">
-            <h1 class="sign-and-log">LOG IN</h1>
+            <h1 class="sign-and-log">
+                <spring:message code="user.login"/>
+            </h1>
         </div>
         <div>
-            <form:form action="/perform_login" method="POST" cssStyle="margin-left: 45%">
+            <form:form action="/perform_login" modelAttribute="user" method="POST" cssStyle="margin-left: 45%">
 
                 <c:if test="${not empty param.error}">
                     <span style="color: red; font-size: 17px;">
@@ -26,7 +28,7 @@
                     </span>
                 </c:if>
 
-                <c:if test="${not empty param.registrationOK}">
+                <c:if test="${not empty param.registration_ok}">
                     <span style="color: #408080; font-size: 17px;">
                         <spring:message code="user.complete.reg" />
                     </span>

@@ -33,13 +33,13 @@ public class News implements Serializable {
     @ToString.Exclude
     private User user;
 
-    @NotNull(message = "not null")
-    @Size(min = 5, max = 100, message = "error size 5-100")
+    @NotNull(message = "{news.valid.notnull}")
+    @Size(min = 5, max = 100, message = "{news.valid.title}")
     @Column(name = "title", nullable = false, length = 100)
     private String title;
 
-    @NotNull(message = "not null")
-    @Size(min = 5, max = 10000, message = "error size min 5-10000")
+    @NotNull(message = "{news.valid.notnull}")
+    @Size(min = 5, max = 10000, message = "{news.valid.content}")
     @Column(name = "content", nullable = false, length = 10000)
     private String content;
 

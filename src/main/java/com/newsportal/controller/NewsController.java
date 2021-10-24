@@ -25,6 +25,7 @@ public class NewsController {
     private static final String ADD_NEWS_PAGE = "add_news";
     private static final String UPDATE_NEWS_PAGE = "update_news";
     private static final String READ_NEWS_PAGE = "read_news";
+    private static final String OFFER_NEWS_PAGE = "offer_news";
     private static final String NEWS_MAIN_URL_REDIRECT = "redirect:/news/";
     private static final String READ_NEWS_REDIRECT = "redirect:/news/read/";
 
@@ -142,5 +143,11 @@ public class NewsController {
         }
 
         return READ_NEWS_REDIRECT + newsId + ERROR_DELETE_FAVOURITE_PARAM;
+    }
+
+    @GetMapping("/offer_news")
+    public String offerNews(Model model) {
+        model.addAttribute(NEWS_ATTRIBUTE, new News());
+        return OFFER_NEWS_PAGE;
     }
 }
