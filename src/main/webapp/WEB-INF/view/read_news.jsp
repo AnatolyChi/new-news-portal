@@ -31,6 +31,12 @@
             <h3>${news.title}</h3>
             <hr>
             <p>${news.content}</p>
+
+            <!-- ЗДЕСЬ ДОБАВИТЬ ФОРМУ ДЛЯ КОММЕНТАРИЯ -->
+
+            <a style="float: left; margin-top: 30px" href="<c:url value="/news/"/>">
+                <img style="width: 29px;" src="../../resources/img/chevron%20with%20circle%20left.svg" alt="back">
+            </a>
         </div>
 
         <c:import url="footer.jsp"/>

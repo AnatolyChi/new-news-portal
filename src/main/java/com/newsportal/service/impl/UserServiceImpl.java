@@ -1,6 +1,7 @@
 package com.newsportal.service.impl;
 
 import com.newsportal.dao.UserDAO;
+import com.newsportal.entity.News;
 import com.newsportal.entity.User;
 import com.newsportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,18 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Transactional
     public Optional<User> getUser(String login, String password) {
         return userDAO.getUser(login, password);
+    }
+
+    @Override
+    @Transactional
+    public Set<News> getFavouriteNews(User user) {
+        return userDAO.getFavouriteNews(user);
+    }
+
+    @Override
+    @Transactional
+    public void update(User user) {
+        userDAO.update(user);
     }
 
     @Override

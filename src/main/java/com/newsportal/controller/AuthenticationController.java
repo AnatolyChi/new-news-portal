@@ -19,7 +19,7 @@ public class AuthenticationController {
     private static final String SIGN_UP_PAGE = "sign_up";
     private static final String LOG_IN_PAGE = "login";
     private static final String ACCESS_DENIED_PAGE = "access_denied";
-    private static final String AUTH_MAIN_FORM_PAGE = "main_form";
+    private static final String WELCOME_PAGE = "welcome";
     private static final String REDIRECT_REG_ERROR = "redirect:/sign_up?error_add=1";
     private static final String REDIRECT_REG_SUCCESS = "redirect:/login?registration_ok=1";
 
@@ -38,7 +38,7 @@ public class AuthenticationController {
 
     @RequestMapping("/welcome")
     public String base() {
-        return AUTH_MAIN_FORM_PAGE;
+        return WELCOME_PAGE;
     }
 
     @GetMapping("/sign_up")

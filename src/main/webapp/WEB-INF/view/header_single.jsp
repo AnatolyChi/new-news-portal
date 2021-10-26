@@ -16,7 +16,7 @@
             <h1 style="color: white; margin: 5px 15px 15px;float: left">GREAT NEWS</h1>
             <div class="top-nav-right">
                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                    <a href="<c:url value="/news/add_news"/>"><spring:message code="local.news.add"/></a>
+                    <a href="<c:url value="/news/add"/>"><spring:message code="local.news.add"/></a>
                 </security:authorize>
                 <a href="<c:url value="/news/user/own_page"/>"><spring:message code="local.personal_page"/></a>
                 <a href="<c:url value="/news/user/favourite_news"/>"><spring:message code="local.news.favourite.page"/></a>

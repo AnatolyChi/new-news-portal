@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Add News</title>
+        <title>News Form</title>
         <link rel="stylesheet" href="../../resources/css/style.css">
         <link rel="stylesheet" href="../../resources/css/news_style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
@@ -13,8 +14,18 @@
     <body>
         <c:import url="header_single.jsp"/>
 
+        <c:if test="${command} == 'add'">
+            <c:url var="action" value="/news/add"/>
+        </c:if>
+        <c:if test="${command} == 'update'">
+            <c:url var="action" value="/news/update/${news.id}"/>
+        </c:if>
+
         <div>
-            <form:form action="/news/add_news" modelAttribute="news" method="POST" cssStyle="margin-left: 30%">
+            <c:if test="${not empty already_exist}">
+                <h3 style="text-align: center; color: #e75339"><spring:message code="local.news.add.err"/></h3>
+            </c:if>
+            <form:form action="${action}" modelAttribute="news" method="POST" cssStyle="margin-left: 30%">
                 <form:hidden path="id"/>
 
                 <form:errors path="title" cssClass="valid-mess"/><br>

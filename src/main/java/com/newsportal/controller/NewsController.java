@@ -22,18 +22,21 @@ import java.util.Optional;
 public class NewsController {
 
     private static final String MAIN_PAGE = "main_news";
-    private static final String ADD_NEWS_PAGE = "add_news";
-    private static final String UPDATE_NEWS_PAGE = "update_news";
+    private static final String NEWS_FORM_PAGE = "news_form";
     private static final String READ_NEWS_PAGE = "read_news";
     private static final String OFFER_NEWS_PAGE = "offer_news";
     private static final String NEWS_MAIN_URL_REDIRECT = "redirect:/news/";
     private static final String READ_NEWS_REDIRECT = "redirect:/news/read/";
 
+    private static final String ALREADY_EXIST_ATTRIBUTE = "already_exist";
     private static final String NEWS_ATTRIBUTE = "news";
     private static final String PAGE_ATTRIBUTE = "page";
     private static final String NEWS_COUNT_ATTRIBUTE = "newsCount";
     private static final String PAGES_COUNT_ATTRIBUTE = "pagesCount";
     private static final String NEWS_LIST_ATTRIBUTE = "newsList";
+    private static final String COMMAND_ATTRIBUTE = "command";
+    private static final String ADD_COM_ATTRIBUTE = "add";
+    private static final String UPDATE_COM_ATTRIBUTE = "update";
 
     private static final String ERROR_ADD_FAVOURITE_PARAM = "?error_add=1";
     private static final String ERROR_DELETE_FAVOURITE_PARAM = "?error_delete=1";
@@ -66,16 +69,18 @@ public class NewsController {
         return MAIN_PAGE;
     }
 
-    @GetMapping("/add_news")
+    @GetMapping("/add")
     public String addNewsPage(Model model) {
+        model.addAttribute(COMMAND_ATTRIBUTE, ADD_COM_ATTRIBUTE);
         model.addAttribute(NEWS_ATTRIBUTE, new News());
-        return ADD_NEWS_PAGE;
+        return NEWS_FORM_PAGE;
     }
 
-    @PostMapping("/add_news")
-    public String addNews(@Valid News news, BindingResult result, Principal principal) {
+    @PostMapping("/add")
+    public String addNews(@Valid @ModelAttribute News news, BindingResult result,
+                          Model model, Principal principal) {
         if (result.hasErrors()) {
-            return ADD_NEWS_PAGE;
+            return NEWS_FORM_PAGE;
         }
 
         Optional<User> user = userService.getUser(principal.getName());
@@ -87,7 +92,8 @@ public class NewsController {
             }
         }
 
-        return ADD_NEWS_PAGE;
+        model.addAttribute(ALREADY_EXIST_ATTRIBUTE, ALREADY_EXIST_ATTRIBUTE);
+        return NEWS_FORM_PAGE;
     }
 
     @RequestMapping("/read/{newsId}")
@@ -96,7 +102,7 @@ public class NewsController {
         return READ_NEWS_PAGE;
     }
 
-    @DeleteMapping("/delete/{newsId}")
+    @RequestMapping("/delete/{newsId}")
     public String deleteNews(@PathVariable("newsId") int newsId) {
         newsService.deleteNews(newsId);
         return NEWS_MAIN_URL_REDIRECT;
@@ -104,14 +110,16 @@ public class NewsController {
 
     @GetMapping("/update/{newsId}")
     public String updateNewsPage(@PathVariable("newsId") int newsId, Model model) {
+        model.addAttribute(COMMAND_ATTRIBUTE, UPDATE_COM_ATTRIBUTE);
         model.addAttribute(NEWS_ATTRIBUTE, newsService.getNews(newsId));
-        return UPDATE_NEWS_PAGE;
+        return NEWS_FORM_PAGE;
     }
 
-    @PutMapping("/update/{newsId}")
-    public String updateNews(@Valid News news, BindingResult result, @PathVariable("newsId") int newsId) {
+    @PostMapping("/update/{newsId}")
+    public String updateNews(@Valid @ModelAttribute News news, BindingResult result,
+                             @PathVariable("newsId") int newsId) {
         if (result.hasErrors()) {
-            return UPDATE_NEWS_PAGE;
+            return NEWS_FORM_PAGE;
         }
 
         news.setId(newsId);
@@ -147,6 +155,8 @@ public class NewsController {
 
     @GetMapping("/offer_news")
     public String offerNews(Model model) {
+
+        // Передать атрибут для определения предложения новости
         model.addAttribute(NEWS_ATTRIBUTE, new News());
         return OFFER_NEWS_PAGE;
     }

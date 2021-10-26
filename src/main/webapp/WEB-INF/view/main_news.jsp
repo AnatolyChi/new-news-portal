@@ -27,7 +27,10 @@
                     <a href="<c:url value="/news/read/${news.id}"/>"><spring:message code="local.news.read"/></a>
                     <security:authorize access="hasRole('ROLE_ADMIN')">
                         <a href="<c:url value="/news/update/${news.id}"/>"><spring:message code="local.news.update"/></a>
-                        <a href="<c:url value="/news/delete/${news.id}"/>"><spring:message code="local.news.delete"/></a>
+                        <a href="<c:url value="/news/delete/${news.id}"/>"
+                           onclick="if (!(confirm('Are you sure you want to delete this news?'))) return false">
+                            <spring:message code="local.news.delete"/>
+                        </a>
                     </security:authorize>
                 </div>
             </c:forEach>
