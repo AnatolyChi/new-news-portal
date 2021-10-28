@@ -1,6 +1,7 @@
 package com.newsportal.service.impl;
 
 import com.newsportal.dao.NewsDAO;
+import com.newsportal.entity.Comment;
 import com.newsportal.entity.News;
 import com.newsportal.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +81,11 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public boolean deleteFromFavourite(int userId, int newsId) {
         return newsDAO.deleteFromFavourite(userId, newsId);
+    }
+
+    @Override
+    @Transactional
+    public void addComment(Comment comment) {
+        newsDAO.addComment(comment);
     }
 }

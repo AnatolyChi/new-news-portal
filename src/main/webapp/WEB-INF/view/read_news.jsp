@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -32,12 +33,25 @@
             <hr>
             <p>${news.content}</p>
 
-            <!-- ЗДЕСЬ ДОБАВИТЬ ФОРМУ ДЛЯ КОММЕНТАРИЯ -->
-
             <a style="float: left; margin-top: 30px" href="<c:url value="/news/"/>">
                 <img style="width: 29px;" src="../../resources/img/chevron%20with%20circle%20left.svg" alt="back">
             </a>
         </div>
+
+        <c:url var="addNewComment" value="/news/comment">
+            <c:param name="newsId" value="${news.id}" />
+        </c:url>
+
+        <form:form action="/news/comment" modelAttribute="comment" method="POST" cssStyle="margin-left: 45%">
+
+            <form:hidden path="news.id" value="${newsId}"/>
+
+            <form:errors path="contentComment"/>
+            <form:textarea path="contentComment" rows="10" cols="20"/>
+
+            <input type="hidden" name="news" value="${newsId}">
+            <input style="margin-top: 30px; margin-left: 230px; float: left" class="submit-button" type="submit" value="submit">
+        </form:form>
 
         <c:import url="footer.jsp"/>
     </body>

@@ -1,5 +1,6 @@
 package com.newsportal.dao;
 
+import com.newsportal.entity.Comment;
 import com.newsportal.entity.News;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface NewsDAO {
     void updateNews(News news);
     boolean addToFavourite(int userId, int newsId);
     boolean deleteFromFavourite(int userId, int newsId);
+    void addComment(Comment comment);
 }

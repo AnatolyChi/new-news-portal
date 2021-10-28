@@ -1,5 +1,6 @@
 package com.newsportal.service;
 
+import com.newsportal.entity.Comment;
 import com.newsportal.entity.News;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface NewsService {
     int newsCount();
     boolean addToFavourite(int userId, int newsId);
     boolean deleteFromFavourite(int userId, int newsId);
+    void addComment(Comment comment);
 }

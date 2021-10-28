@@ -1,6 +1,7 @@
 package com.newsportal.dao.impl;
 
 import com.newsportal.dao.NewsDAO;
+import com.newsportal.entity.Comment;
 import com.newsportal.entity.News;
 import com.newsportal.entity.User;
 import org.hibernate.Session;
@@ -100,6 +101,12 @@ public class NewsDAOImpl implements NewsDAO {
         News news = session.load(News.class, newsId);
         Set<News> newsSet = user.getFavouriteNews();
         return newsSet.remove(news);
+    }
+
+    @Override
+    public void addComment(Comment comment) {
+        session = sessionFactory.getCurrentSession();
+        session.save(comment);
     }
 
     @Override

@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -50,6 +51,10 @@ public class News implements Serializable {
     @ManyToMany(mappedBy = "favouriteNews")
     @ToString.Exclude
     private Set<User> userIsFavorites;
+
+    @OneToMany(mappedBy = "news")
+    @ToString.Exclude
+    private List<Comment> comments;
 
     @Override
     public boolean equals(Object o) {

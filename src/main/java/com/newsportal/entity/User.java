@@ -49,15 +49,15 @@ public class User implements UserDetails, Serializable {
     @Column(name = "firstname", length = 30)
     private String firstname;
 
-//    @Pattern(regexp = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$", message = "{user.valid.lastname}")
+    @Pattern(regexp = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$", message = "{user.valid.lastname}")
     @Column(name = "lastname", length = 30)
     private String lastname;
 
-//    @Email(message = "{user.valid.email}")
+    @Email(message = "{user.valid.email}")
     @Column(name = "email", length = 30)
     private String email;
 
-//    @Min(value = 18, message = "{user.valid.age}")
+    @Min(value = 18, message = "{user.valid.age}")
     @Column(name = "age")
     private Integer age;
 

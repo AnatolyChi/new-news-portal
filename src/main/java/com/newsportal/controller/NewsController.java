@@ -1,5 +1,6 @@
 package com.newsportal.controller;
 
+import com.newsportal.entity.Comment;
 import com.newsportal.entity.News;
 import com.newsportal.entity.User;
 import com.newsportal.service.NewsService;
@@ -37,6 +38,7 @@ public class NewsController {
     private static final String COMMAND_ATTRIBUTE = "command";
     private static final String ADD_COM_ATTRIBUTE = "add";
     private static final String UPDATE_COM_ATTRIBUTE = "update";
+    private static final String COMMENT_ATTRIBUTE = "comment";
 
     private static final String ERROR_ADD_FAVOURITE_PARAM = "?error_add=1";
     private static final String ERROR_DELETE_FAVOURITE_PARAM = "?error_delete=1";
@@ -99,6 +101,11 @@ public class NewsController {
     @RequestMapping("/read/{newsId}")
     public String readNews(@PathVariable("newsId") int newsId, Model model) {
         model.addAttribute(NEWS_ATTRIBUTE, newsService.getNews(newsId));
+        model.addAttribute(COMMENT_ATTRIBUTE, new Comment());
+
+        // отобразить комментарии для данной новости
+
+
         return READ_NEWS_PAGE;
     }
 
@@ -159,5 +166,23 @@ public class NewsController {
         // Передать атрибут для определения предложения новости
         model.addAttribute(NEWS_ATTRIBUTE, new News());
         return OFFER_NEWS_PAGE;
+    }
+
+    @PostMapping("/comment")
+    public String addComment(@Valid @ModelAttribute Comment comment, BindingResult result,
+                             @RequestParam("news.id") int newsId, Principal principal, Model model) {
+
+        News news = newsService.getNews(newsId);
+        if (result.hasFieldErrors("contentComment")) {
+            model.addAttribute(NEWS_ATTRIBUTE, news);
+            return READ_NEWS_PAGE;
+        }
+
+        Optional<User> user = userService.getUser(principal.getName());
+        comment.setUser(user.get());
+        comment.setNews(news);
+
+        newsService.addComment(comment);
+        return READ_NEWS_REDIRECT + news.getId();
     }
 }
