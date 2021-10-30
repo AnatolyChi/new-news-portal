@@ -9,10 +9,9 @@ import java.util.Set;
 
 public interface UserDAO {
     List<User> getListUsers();
-    void saveUser(User user);
+    void save(User user);
+    void update(User user);
     Optional<User> getUser(int id);
     Optional<User> getUser(String login);
-    Optional<User> getUser(String login, String password);
     Set<News> getFavouriteNews(User user);
-    void update(User user);
 }

@@ -12,7 +12,6 @@ public interface UserService {
     boolean saveUser(User user);
     Optional<User> getUser(int id);
     Optional<User> getUser(String login);
-    Optional<User> getUser(String login, String password);
     Set<News> getFavouriteNews(User user);
     void update(User user);
 }

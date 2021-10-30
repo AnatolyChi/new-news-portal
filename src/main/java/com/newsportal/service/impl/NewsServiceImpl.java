@@ -37,12 +37,6 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
-    public void updateNews(int newsId) {
-        newsDAO.updateNews(newsId);
-    }
-
-    @Override
-    @Transactional
     public void deleteNews(int id) {
         newsDAO.deleteNews(id);
     }
@@ -87,5 +81,11 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public void addComment(Comment comment) {
         newsDAO.addComment(comment);
+    }
+
+    @Override
+    @Transactional
+    public List<Comment> getCommentsByNews(int newsId) {
+        return newsDAO.getCommentsByNews(newsId);
     }
 }

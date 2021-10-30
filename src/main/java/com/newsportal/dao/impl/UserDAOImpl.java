@@ -16,31 +16,37 @@ import java.util.*;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
+    private static final String QUERY_FOR_GET_LIST_USERS = "FROM User ORDER BY id";
+    private static final String QUERY_FOR_SAVE_USER = "FROM Role r WHERE roleName = :roleName";
+    private static final String QUERY_FOR_GET_USER_BY_ID ="FROM User u WHERE u.id = :id";
+    private static final String QUERY_FOR_GET_USER_BY_USERNAME = "FROM User u WHERE u.username = :username";
+
+    private static final String ROLE_PARAM = "roleName";
+    private static final String ROLE_DEFAULT = "ROLE_USER";
+    private static final String ID_PARAM = "id";
+    private static final String USERNAME_PARAM = "username";
+
     public static final String NO_BCRIPT = "{noop}";
 
     @Autowired
     private SessionFactory sessionFactory;
 
-//    @Autowired
-//    private BCryptPasswordEncoder encoder;
-
     @Override
     public List<User> getListUsers() {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM User ORDER BY id", User.class).list();
+                .createQuery(QUERY_FOR_GET_LIST_USERS, User.class).list();
     }
 
     @Override
-    public void saveUser(User user) {
+    public void save(User user) {
         Session session = sessionFactory.getCurrentSession();
 
-        Role role = session.createQuery("FROM Role r WHERE roleName = :roleName", Role.class)
-                .setParameter("roleName", "ROLE_USER")
+        Role role = session.createQuery(QUERY_FOR_SAVE_USER, Role.class)
+                .setParameter(ROLE_PARAM, ROLE_DEFAULT)
                 .getSingleResult();
 
         user.setPassword(NO_BCRIPT + user.getPassword());
         user.setUserRole(Collections.singleton(role));
-
         user.setEnabled(true);
 
         session.save(user);
@@ -49,8 +55,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Optional<User> getUser(int id) {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM User u WHERE u.id = :id", User.class)
-                .setParameter("id", id)
+                .createQuery(QUERY_FOR_GET_USER_BY_ID, User.class)
+                .setParameter(ID_PARAM, id)
                 .getResultList()
                 .stream()
                 .findFirst();
@@ -59,20 +65,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Optional<User> getUser(String login) {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM User u WHERE u.username = :username", User.class)
-                .setParameter("username", login)
-                .getResultList()
-                .stream()
-                .findFirst();
-    }
-
-    @Override
-    public Optional<User> getUser(String login, String password) {
-        return sessionFactory.getCurrentSession()
-                .createQuery("FROM User u WHERE u.username = :username AND u.password = :password", User.class)
-                .setParameter("username", login)
-                .setParameter("password", password)
-//                .setParameter("password", encoder.encode(password))
+                .createQuery(QUERY_FOR_GET_USER_BY_USERNAME, User.class)
+                .setParameter(USERNAME_PARAM, login)
                 .getResultList()
                 .stream()
                 .findFirst();
@@ -82,20 +76,16 @@ public class UserDAOImpl implements UserDAO {
     public Set<News> getFavouriteNews(User user) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+
         session.load(user, user.getId());
         Set<News> newsSet = user.getFavouriteNews();
+
         session.getTransaction().commit();
         return newsSet;
     }
 
     @Override
     public void update(User user) {
-        sessionFactory.getCurrentSession()
-                .createQuery("UPDATE User u SET u.firstname = :firstname, u.lastname = :lastname, u.email = :email, u.age = :age")
-                .setParameter("firstname", user.getFirstname())
-                .setParameter("lastname", user.getLastname())
-                .setParameter("email", user.getEmail())
-                .setParameter("age", user.getAge())
-                .executeUpdate();
+        sessionFactory.getCurrentSession().update(user);
     }
 }

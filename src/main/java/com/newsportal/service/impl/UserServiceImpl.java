@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             return false;
         }
 
-        userDAO.saveUser(user);
+        userDAO.save(user);
         return true;
     }
 
@@ -48,12 +48,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Transactional
     public Optional<User> getUser(String login) {
         return userDAO.getUser(login);
-    }
-
-    @Override
-    @Transactional
-    public Optional<User> getUser(String login, String password) {
-        return userDAO.getUser(login, password);
     }
 
     @Override

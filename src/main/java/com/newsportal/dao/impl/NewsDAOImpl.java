@@ -10,12 +10,17 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class NewsDAOImpl implements NewsDAO {
+
+    private static final String QUERY_FOR_COUNT_NEWS = "SELECT COUNT(*) FROM News";
+    private static final String QUERY_FOR_GET_LIST_NEWS = "FROM News ORDER BY date";
+    private static final String QUERY_FOR_GET_LIST_NEWS_BY_PAGE = "FROM News ORDER BY id";
+    private static final String QUERY_FOR_GET_NEWS_BY_TITLE = "FROM News n WHERE n.title = :title";
+
+    private static final String TITLE_PARAM = "title";
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -24,8 +29,7 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public List<News> getListNews() {
         Session session = sessionFactory.getCurrentSession();
-        Query<News> newsQuery = session.createQuery(
-                "FROM News ORDER BY date", News.class);
+        Query<News> newsQuery = session.createQuery(QUERY_FOR_GET_LIST_NEWS, News.class);
 
         return newsQuery.getResultList();
     }
@@ -33,7 +37,7 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public List<News> getListNews(int page) {
         session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM News ORDER BY id", News.class)
+        return session.createQuery(QUERY_FOR_GET_LIST_NEWS_BY_PAGE, News.class)
                 .setFirstResult(6 * (page - 1))
                 .setMaxResults(6)
                 .getResultList();
@@ -46,12 +50,6 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     @Override
-    public void updateNews(int newsId) {
-        session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(session.get(News.class, newsId));
-    }
-
-    @Override
     public News getNews(int id) {
         session = sessionFactory.getCurrentSession();
         return session.get(News.class, id);
@@ -60,8 +58,8 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public Optional<News> getNews(String title) {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM News n WHERE n.title = :title", News.class)
-                .setParameter("title", title)
+                .createQuery(QUERY_FOR_GET_NEWS_BY_TITLE, News.class)
+                .setParameter(TITLE_PARAM, title)
                 .getResultList()
                 .stream()
                 .findFirst();
@@ -69,18 +67,13 @@ public class NewsDAOImpl implements NewsDAO {
 
     @Override
     public void updateNews(News news) {
-        sessionFactory.getCurrentSession()
-                .createQuery("UPDATE News n SET n.title = :title, n.content = :content WHERE n.id = :id")
-                .setParameter("title", news.getTitle())
-                .setParameter("content", news.getContent())
-                .setParameter("id", news.getId())
-                .executeUpdate();
+        sessionFactory.getCurrentSession().update(news);
     }
 
     @Override
     public int countNews() {
         return sessionFactory.getCurrentSession()
-                .createQuery("SELECT COUNT(*) FROM News", Number.class)
+                .createQuery(QUERY_FOR_COUNT_NEWS, Number.class)
                 .getSingleResult()
                 .intValue();
     }
@@ -101,6 +94,19 @@ public class NewsDAOImpl implements NewsDAO {
         News news = session.load(News.class, newsId);
         Set<News> newsSet = user.getFavouriteNews();
         return newsSet.remove(news);
+    }
+
+    @Override
+    public List<Comment> getCommentsByNews(int newsId) {
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        News news = session.load(News.class, newsId);
+        List<Comment> comments = news.getComments();
+        comments.sort(Comparator.comparing(Comment::getDate));
+
+        session.getTransaction().commit();
+        return comments;
     }
 
     @Override

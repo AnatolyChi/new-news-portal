@@ -13,7 +13,7 @@
     <body>
         <c:import url="header_single.jsp"/>
 
-        <div style="margin: auto">
+        <div style="margin-top: 30px; margin-left: 30px">
             <p><spring:message code="local.firstname"/> : ${user.firstname}</p>
             <p><spring:message code="local.lastname"/> : ${user.lastname}</p>
             <p><spring:message code="local.email"/> : ${user.email}</p>

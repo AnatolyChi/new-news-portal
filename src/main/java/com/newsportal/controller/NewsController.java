@@ -29,20 +29,22 @@ public class NewsController {
     private static final String NEWS_MAIN_URL_REDIRECT = "redirect:/news/";
     private static final String READ_NEWS_REDIRECT = "redirect:/news/read/";
 
-    private static final String ALREADY_EXIST_ATTRIBUTE = "already_exist";
     private static final String NEWS_ATTRIBUTE = "news";
     private static final String PAGE_ATTRIBUTE = "page";
+    private static final String ADD_COM_ATTRIBUTE = "add";
+    private static final String COMMAND_ATTRIBUTE = "command";
+    private static final String COMMENT_ATTRIBUTE = "comment";
+    private static final String UPDATE_COM_ATTRIBUTE = "update";
+    private static final String NEWS_LIST_ATTRIBUTE = "newsList";
     private static final String NEWS_COUNT_ATTRIBUTE = "newsCount";
     private static final String PAGES_COUNT_ATTRIBUTE = "pagesCount";
-    private static final String NEWS_LIST_ATTRIBUTE = "newsList";
-    private static final String COMMAND_ATTRIBUTE = "command";
-    private static final String ADD_COM_ATTRIBUTE = "add";
-    private static final String UPDATE_COM_ATTRIBUTE = "update";
-    private static final String COMMENT_ATTRIBUTE = "comment";
+    private static final String COMMENTS_LIST_ATTRIBUTE = "commentsList";
+    private static final String ALREADY_EXIST_ATTRIBUTE = "already_exist";
+    private static final String COMMENT_CONTENT_ATTRIBUTE = "contentComment";
 
     private static final String ERROR_ADD_FAVOURITE_PARAM = "?error_add=1";
-    private static final String ERROR_DELETE_FAVOURITE_PARAM = "?error_delete=1";
     private static final String SUCCESS_ADD_FAVOURITE_PARAM = "?success_add=1";
+    private static final String ERROR_DELETE_FAVOURITE_PARAM = "?error_delete=1";
     private static final String SUCCESS_DELETE_FAVOURITE_PARAM = "?success_delete=1";
 
     @Autowired
@@ -102,10 +104,7 @@ public class NewsController {
     public String readNews(@PathVariable("newsId") int newsId, Model model) {
         model.addAttribute(NEWS_ATTRIBUTE, newsService.getNews(newsId));
         model.addAttribute(COMMENT_ATTRIBUTE, new Comment());
-
-        // отобразить комментарии для данной новости
-
-
+        model.addAttribute(COMMENTS_LIST_ATTRIBUTE, newsService.getCommentsByNews(newsId));
         return READ_NEWS_PAGE;
     }
 
@@ -173,7 +172,8 @@ public class NewsController {
                              @RequestParam("news.id") int newsId, Principal principal, Model model) {
 
         News news = newsService.getNews(newsId);
-        if (result.hasFieldErrors("contentComment")) {
+        if (result.hasFieldErrors(COMMENT_CONTENT_ATTRIBUTE)) {
+            model.addAttribute(COMMENTS_LIST_ATTRIBUTE, newsService.getCommentsByNews(newsId));
             model.addAttribute(NEWS_ATTRIBUTE, news);
             return READ_NEWS_PAGE;
         }
