@@ -8,10 +8,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface UserDAO {
-    List<User> getListUsers();
     void save(User user);
     void update(User user);
-    Optional<User> getUser(int id);
-    Optional<User> getUser(String login);
+    Optional<User> getUserById(int id);
+    Optional<User> getUserByLogin(String login);
     Set<News> getFavouriteNews(User user);
 }

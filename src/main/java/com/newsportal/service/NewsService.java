@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NewsService {
-    List<News> getListNews();
     List<News> getListNews(int page);
     Optional<News> getNews(String title);
     void saveNews(News news);
@@ -17,6 +16,4 @@ public interface NewsService {
     int newsCount();
     boolean addToFavourite(int userId, int newsId);
     boolean deleteFromFavourite(int userId, int newsId);
-    void addComment(Comment comment);
-    List<Comment> getCommentsByNews(int newsId);
 }

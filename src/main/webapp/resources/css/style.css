@@ -131,6 +131,7 @@ body {
     width: 100%;
     flex-shrink: 0;
     height: 80px;
+    margin-top: 40px;
 }
 
 .body-img {

@@ -65,7 +65,7 @@ public class User implements UserDetails, Serializable {
     @Column(name = "date_registered", nullable = false, updatable = false)
     private Timestamp dateRegistered;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -16,7 +16,6 @@ import java.util.*;
 public class NewsDAOImpl implements NewsDAO {
 
     private static final String QUERY_FOR_COUNT_NEWS = "SELECT COUNT(*) FROM News";
-    private static final String QUERY_FOR_GET_LIST_NEWS = "FROM News ORDER BY date";
     private static final String QUERY_FOR_GET_LIST_NEWS_BY_PAGE = "FROM News ORDER BY id";
     private static final String QUERY_FOR_GET_NEWS_BY_TITLE = "FROM News n WHERE n.title = :title";
 
@@ -25,14 +24,6 @@ public class NewsDAOImpl implements NewsDAO {
     @Autowired
     private SessionFactory sessionFactory;
     private Session session;
-
-    @Override
-    public List<News> getListNews() {
-        Session session = sessionFactory.getCurrentSession();
-        Query<News> newsQuery = session.createQuery(QUERY_FOR_GET_LIST_NEWS, News.class);
-
-        return newsQuery.getResultList();
-    }
 
     @Override
     public List<News> getListNews(int page) {
@@ -94,25 +85,6 @@ public class NewsDAOImpl implements NewsDAO {
         News news = session.load(News.class, newsId);
         Set<News> newsSet = user.getFavouriteNews();
         return newsSet.remove(news);
-    }
-
-    @Override
-    public List<Comment> getCommentsByNews(int newsId) {
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        News news = session.load(News.class, newsId);
-        List<Comment> comments = news.getComments();
-        comments.sort(Comparator.comparing(Comment::getDate));
-
-        session.getTransaction().commit();
-        return comments;
-    }
-
-    @Override
-    public void addComment(Comment comment) {
-        session = sessionFactory.getCurrentSession();
-        session.save(comment);
     }
 
     @Override

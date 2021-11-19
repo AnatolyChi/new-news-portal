@@ -11,11 +11,11 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700">
     </head>
     <body>
-
         <nav class="top-nav">
             <h1 style="color: white; margin: 5px 15px 15px;float: left">GREAT NEWS</h1>
             <div class="top-nav-right">
                 <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <a href="<c:url value="/news/control_panel/"/>"><spring:message code="local.admin.panel"/></a>
                     <a href="<c:url value="/news/add"/>"><spring:message code="local.news.add"/></a>
                 </security:authorize>
                 <a href="<c:url value="/news/user/own_page"/>"><spring:message code="local.personal_page"/></a>
@@ -37,6 +37,5 @@
                 </div>
             </div>
         </nav>
-
     </body>
 </html>

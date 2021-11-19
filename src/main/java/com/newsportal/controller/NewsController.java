@@ -3,6 +3,7 @@ package com.newsportal.controller;
 import com.newsportal.entity.Comment;
 import com.newsportal.entity.News;
 import com.newsportal.entity.User;
+import com.newsportal.service.CommentService;
 import com.newsportal.service.NewsService;
 import com.newsportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class NewsController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     @InitBinder
     private void initBinder(WebDataBinder dataBinder) {
@@ -104,7 +108,7 @@ public class NewsController {
     public String readNews(@PathVariable("newsId") int newsId, Model model) {
         model.addAttribute(NEWS_ATTRIBUTE, newsService.getNews(newsId));
         model.addAttribute(COMMENT_ATTRIBUTE, new Comment());
-        model.addAttribute(COMMENTS_LIST_ATTRIBUTE, newsService.getCommentsByNews(newsId));
+        model.addAttribute(COMMENTS_LIST_ATTRIBUTE, commentService.getCommentsByNews(newsId));
         return READ_NEWS_PAGE;
     }
 
@@ -173,7 +177,7 @@ public class NewsController {
 
         News news = newsService.getNews(newsId);
         if (result.hasFieldErrors(COMMENT_CONTENT_ATTRIBUTE)) {
-            model.addAttribute(COMMENTS_LIST_ATTRIBUTE, newsService.getCommentsByNews(newsId));
+            model.addAttribute(COMMENTS_LIST_ATTRIBUTE, commentService.getCommentsByNews(newsId));
             model.addAttribute(NEWS_ATTRIBUTE, news);
             return READ_NEWS_PAGE;
         }
@@ -182,7 +186,7 @@ public class NewsController {
         comment.setUser(user.get());
         comment.setNews(news);
 
-        newsService.addComment(comment);
+        commentService.addComment(comment);
         return READ_NEWS_REDIRECT + news.getId();
     }
 }

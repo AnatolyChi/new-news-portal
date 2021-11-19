@@ -3,11 +3,11 @@ package com.newsportal.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
@@ -15,7 +15,6 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
-@ToString
 @NoArgsConstructor
 @Table(name = "role")
 public class Role implements GrantedAuthority, Serializable {
@@ -29,7 +28,6 @@ public class Role implements GrantedAuthority, Serializable {
     private String roleName;
 
     @ManyToMany(mappedBy = "userRole")
-    @ToString.Exclude
     private Set<User> users;
 
     public Role(Integer id) {
@@ -61,5 +59,9 @@ public class Role implements GrantedAuthority, Serializable {
     @Override
     public String getAuthority() {
         return getRoleName();
+    }
+
+    public String toString() {
+        return this.getRoleName();
     }
 }

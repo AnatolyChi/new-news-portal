@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Title</title>
+        <title>Signup</title>
         <link rel="stylesheet" href="../../resources/css/style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700">
@@ -31,7 +31,5 @@
                 <input style="margin-left: 40px; margin-top: 15px" class="submit-button" type="submit" value="submit">
             </form:form>
         </div>
-
-        <c:import url="footer.jsp"/>
     </body>
 </html>

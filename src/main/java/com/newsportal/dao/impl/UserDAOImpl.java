@@ -16,7 +16,6 @@ import java.util.*;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-    private static final String QUERY_FOR_GET_LIST_USERS = "FROM User ORDER BY id";
     private static final String QUERY_FOR_SAVE_USER = "FROM Role r WHERE roleName = :roleName";
     private static final String QUERY_FOR_GET_USER_BY_ID ="FROM User u WHERE u.id = :id";
     private static final String QUERY_FOR_GET_USER_BY_USERNAME = "FROM User u WHERE u.username = :username";
@@ -30,12 +29,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Override
-    public List<User> getListUsers() {
-        return sessionFactory.getCurrentSession()
-                .createQuery(QUERY_FOR_GET_LIST_USERS, User.class).list();
-    }
 
     @Override
     public void save(User user) {
@@ -53,7 +46,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional<User> getUser(int id) {
+    public Optional<User> getUserById(int id) {
         return sessionFactory.getCurrentSession()
                 .createQuery(QUERY_FOR_GET_USER_BY_ID, User.class)
                 .setParameter(ID_PARAM, id)
@@ -63,7 +56,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional<User> getUser(String login) {
+    public Optional<User> getUserByLogin(String login) {
         return sessionFactory.getCurrentSession()
                 .createQuery(QUERY_FOR_GET_USER_BY_USERNAME, User.class)
                 .setParameter(USERNAME_PARAM, login)

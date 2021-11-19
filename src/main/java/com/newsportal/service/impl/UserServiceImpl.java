@@ -21,14 +21,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public List<User> getListUsers() {
-        return null;
-    }
-
-    @Override
-    @Transactional
     public boolean saveUser(User user) {
-        Optional<User> userFromDB = userDAO.getUser(user.getUsername());
+        Optional<User> userFromDB = userDAO.getUserByLogin(user.getUsername());
 
         if (userFromDB.isPresent()) {
             return false;
@@ -41,13 +35,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public Optional<User> getUser(int id) {
-        return userDAO.getUser(id);
+        return userDAO.getUserById(id);
     }
 
     @Override
     @Transactional
     public Optional<User> getUser(String login) {
-        return userDAO.getUser(login);
+        return userDAO.getUserByLogin(login);
     }
 
     @Override
@@ -65,7 +59,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userDAO.getUser(username);
+        Optional<User> user = userDAO.getUserByLogin(username);
 
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("error");

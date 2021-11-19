@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface UserService {
-    List<User> getListUsers();
     boolean saveUser(User user);
     Optional<User> getUser(int id);
     Optional<User> getUser(String login);

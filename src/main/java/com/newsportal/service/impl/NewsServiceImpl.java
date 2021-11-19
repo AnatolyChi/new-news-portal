@@ -19,12 +19,6 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
-    public List<News> getListNews() {
-        return newsDAO.getListNews();
-    }
-
-    @Override
-    @Transactional
     public List<News> getListNews(int page) {
         return newsDAO.getListNews(page);
     }
@@ -75,17 +69,5 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public boolean deleteFromFavourite(int userId, int newsId) {
         return newsDAO.deleteFromFavourite(userId, newsId);
-    }
-
-    @Override
-    @Transactional
-    public void addComment(Comment comment) {
-        newsDAO.addComment(comment);
-    }
-
-    @Override
-    @Transactional
-    public List<Comment> getCommentsByNews(int newsId) {
-        return newsDAO.getCommentsByNews(newsId);
     }
 }
